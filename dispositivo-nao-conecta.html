@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dispositivo smart Wi-Fi não conecta ou fica offline | Base Tech</title>
+<meta name="description" content="Descubra por que seu dispositivo smart Wi-Fi não conecta, fica offline ou cai da rede. Diagnóstico por sintoma, testes práticos e soluções passo a passo.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://basetech-br.github.io/base-tech/dispositivo-nao-conecta.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Base Tech">
+<meta property="og:title" content="Dispositivo smart Wi-Fi não conecta ou fica offline">
+<meta property="og:description" content="Diagnóstico por sintoma, testes práticos e soluções para dispositivos smart Wi-Fi que não conectam ou vivem caindo.">
+<meta property="og:url" content="https://basetech-br.github.io/base-tech/dispositivo-nao-conecta.html">
+<link rel="icon" type="image/png" sizes="32x32" href="identidade/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="identidade/favicon-512.png">
+<link rel="apple-touch-icon" href="identidade/apple-touch-icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F3F5F4; --bg-raised: #FFFFFF; --ink: #14213D; --ink-soft: #4A5568;
+    --good: #1C7C54; --warn: #A66E00; --weak: #C1440E; --line: #DDE3E1; --teal: #0E7C86; --radius: 14px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; line-height: 1.6; }
+  a{ color: var(--teal); }
+  img, svg{ max-width:100%; }
+  .wrap{ max-width: 1120px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .prose{ max-width: 700px; }
+
+  header.site{ border-bottom: 1px solid var(--line); padding: 18px 0; }
+  .site-head{ display:flex; align-items:center; justify-content:space-between; max-width: 1120px; margin:0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .brand{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:1.15rem; letter-spacing:-0.01em; display:flex; align-items:center; gap:10px; }
+  .brand .bars{ display:flex; align-items:flex-end; gap:2px; height:16px; }
+  .brand .bars i{ width:4px; background: var(--good); display:block; border-radius:1px; }
+  .brand .bars i:nth-child(1){ height:5px; } .brand .bars i:nth-child(2){ height:9px; }
+  .brand .bars i:nth-child(3){ height:13px; } .brand .bars i:nth-child(4){ height:16px; }
+  nav.site a{ font-size:0.85rem; color: var(--ink-soft); text-decoration:none; margin-left:18px; }
+  nav.site a:hover{ color: var(--teal); }
+
+  .hero{ padding: 56px 0 28px; }
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color: var(--teal); display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background: var(--good); }
+  h1{ font-family:'Space Grotesk', sans-serif; font-size: clamp(1.9rem, 4vw, 2.9rem); line-height:1.12; letter-spacing:-0.02em; margin: 0 0 16px; max-width: 20ch; }
+  .dek{ font-size:1.08rem; color: var(--ink-soft); max-width: 62ch; margin: 0 0 28px; }
+  .lede{ font-size:1.05rem; }
+
+  .painel-box{ background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; margin: 32px 0; max-width: 820px; }
+  .painel-box h3{ font-family:'Space Grotesk', sans-serif; font-size:1.05rem; margin:0 0 10px; }
+  .painel-box ol{ margin:0; padding-left:20px; font-size:0.96rem; }
+  .painel-box li{ margin-bottom:7px; }
+  .painel-box p{ font-size:0.96rem; }
+
+  .cross-link{ background: linear-gradient(135deg, #EAF4F2, #F3F5F4); border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: var(--radius); padding: 20px 24px; margin: 32px 0; max-width:820px; }
+  .cross-link .tag{ font-family:'IBM Plex Mono', monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color: var(--teal); margin:0 0 6px; }
+  .cross-link p{ margin:0; font-size:0.96rem; }
+  .cross-link a{ font-weight:600; }
+
+  .diag{ padding: 6px 0 10px; }
+  .diag-box{ background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px clamp(20px,4vw,34px); max-width: 760px; }
+  .q{ padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .q:last-of-type{ border-bottom:none; }
+  .qtext{ margin: 0 0 10px; font-weight:500; font-size:0.97rem; }
+  .opts{ display:flex; gap:20px; flex-wrap:wrap; }
+  .opts label{ display:flex; align-items:center; gap:7px; font-size:0.92rem; color: var(--ink-soft); cursor:pointer; }
+  .opts input{ accent-color: var(--teal); width:16px; height:16px; }
+  .diag-btn{ margin-top: 22px; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:0.95rem; background: var(--ink); color: #fff; border:none; padding: 12px 22px; border-radius: 8px; cursor:pointer; }
+  .diag-btn:hover{ background: var(--teal); }
+  .diag-result{ margin-top: 24px; padding-top: 22px; border-top: 1px dashed var(--line); }
+  .diag-result h3{ font-family:'Space Grotesk', sans-serif; font-size:1.05rem; margin: 0 0 14px; }
+  .diag-item{ display:flex; align-items:center; justify-content:space-between; padding: 12px 14px; margin-bottom:8px; background: var(--bg); border-radius:8px; font-size:0.92rem; }
+  .diag-item a{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-decoration:none; }
+  .diag-empty{ color: var(--ink-soft); font-size:0.92rem; }
+  .diag-intro{ border-left:3px solid var(--teal); padding-left:14px; color:var(--ink-soft); font-size:0.92rem; }
+  fieldset.q{ border:0; margin:0; min-width:0; }
+  fieldset.q legend{ width:100%; padding:0; }
+  .form-error{ margin:16px 0 0; padding:12px 14px; border-left:3px solid var(--weak); background:#FDECE6; color:var(--ink); font-size:0.92rem; }
+  .symptom-nav{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; max-width:820px; margin:22px 0 0; }
+  .symptom-nav a{ display:flex; align-items:center; gap:8px; padding:13px 15px; border:1px solid var(--line); border-left:3px solid var(--teal); border-radius:10px; background:var(--bg-raised); text-decoration:none; font-weight:600; font-size:0.9rem; font-family:'Space Grotesk',sans-serif; color:var(--ink); transition:border-color .15s ease,background .15s ease; }
+  .symptom-nav a:hover{ border-left-color:var(--good); background:var(--bg); }
+  .symptom-nav a::before{ content:"→"; color:var(--teal); font-weight:700; }
+  .scope-note{ background:#FFF8E8; border:1px solid #E8D39C; border-radius:var(--radius); padding:18px 22px; max-width:820px; margin:26px 0; }
+  .scope-note p{ margin:0; font-size:0.95rem; }
+  .last-resort{ background:var(--bg-raised); border:1px solid var(--line); border-left:4px solid var(--warn); border-radius:var(--radius); padding:22px 24px; max-width:820px; margin:42px 0 0; }
+  .last-resort h2{ font-family:'Space Grotesk',sans-serif; margin:0 0 10px; font-size:1.35rem; }
+
+  .categoria{ padding: 46px 0 8px; }
+  .cat-label{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color: var(--teal); margin-bottom:6px; }
+  .cat-title{ font-family:'Space Grotesk', sans-serif; font-size:1.5rem; margin:0 0 8px; letter-spacing:-0.01em; }
+  .cat-desc{ color: var(--ink-soft); max-width:70ch; margin: 0 0 26px; }
+
+  .cause-grid{ display:grid; grid-template-columns: 1fr; gap:22px; }
+  @media (min-width: 880px){ .cause-grid{ grid-template-columns: 1fr 1fr; } }
+
+  .cause{ background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; display:flex; flex-direction:column; gap:14px; }
+  .cause-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .impact{ font-family:'IBM Plex Mono', monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; padding: 3px 9px; border-radius: 20px; font-weight:600; white-space:nowrap; }
+  .impact.alto{ background:#FDECE6; color: var(--weak); }
+  .impact.medio{ background:#FBF1DC; color: var(--warn); }
+  .impact.variavel{ background:#E4F2EE; color: var(--good); }
+  .impact.baixo{ background:#EDEFEE; color: var(--ink-soft); }
+  .cause h3{ font-family:'Space Grotesk', sans-serif; font-size:1.05rem; margin:0; }
+
+  .diagram{ background: var(--bg); border: 1px solid var(--line); border-radius:10px; padding: 14px; display:flex; align-items:center; justify-content:center; }
+  .diagram svg{ width:100%; height:auto; display:block; }
+
+  .resumo{ font-size:0.92rem; color: var(--ink-soft); margin:0; }
+  .cause p.body{ margin:0; font-size:0.96rem; }
+  .cause .tag{ font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color: var(--ink-soft); text-transform:uppercase; letter-spacing:0.05em; margin: 4px 0 0; }
+  .cause .fix{ margin:2px 0 0; font-size:0.96rem; }
+  .cause .confirm{ margin:2px 0 0; font-size:0.96rem; }
+  .cause .steps{ margin:6px 0 0; padding-left:20px; font-size:0.96rem; }
+  .cause .steps li{ margin-bottom:7px; }
+  .cause .steps li:last-child{ margin-bottom:0; }
+
+  .callout{ border-left: 3px solid var(--teal); padding: 4px 0 4px 18px; margin: 34px 0; color: var(--ink-soft); font-size:0.95rem; max-width: 760px; }
+
+  .checklist{ list-style:none; padding:0; margin: 18px 0 0; max-width:760px; }
+  .checklist li{ display:flex; gap:10px; align-items:flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); font-size:0.97rem; }
+  .checklist li:last-child{ border-bottom:none; }
+  .checklist .n{ font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color: var(--teal); flex-shrink:0; padding-top:2px; }
+
+  .faq{ max-width:760px; }
+  .faq details{ border-bottom: 1px solid var(--line); padding: 14px 0; }
+  .faq summary{ cursor:pointer; font-weight:600; font-size:0.98rem; list-style:none; }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary::before{ content:"+ "; color: var(--teal); font-weight:700; }
+  .faq details[open] summary::before{ content:"– "; }
+  .faq p{ margin: 10px 0 0; color: var(--ink-soft); font-size:0.95rem; }
+
+  footer.site{ border-top:1px solid var(--line); padding: 34px 0 50px; color: var(--ink-soft); font-size:0.85rem; margin-top:50px; }
+  footer.site .brand{ margin-bottom:8px; }
+  footer.site .bars i{ background: var(--ink-soft); }
+
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible{ outline: 3px solid var(--teal); outline-offset: 2px; }
+  .skip-link{ position:absolute; left:-9999px; top:0; background:var(--ink); color:#fff; padding:10px 16px; z-index:100; border-radius:0 0 8px 0; }
+  .skip-link:focus{ left:0; }
+
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } * { transition:none !important; } }
+</style>
+</head>
+<body>
+
+<a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
+<header class="site">
+  <div class="site-head">
+    <div class="brand"><span class="bars"><i></i><i></i><i></i><i></i></span> Base Tech</div>
+    <nav class="site" aria-label="Navegação principal"><a href="index.html">Guias</a><a href="index.html#sobre">Sobre</a></nav>
+  </div>
+</header>
+
+<main class="wrap" id="conteudo">
+  <article id="artigo">
+    <header class="hero">
+      <div class="eyebrow"><span class="dot"></span> Diagnóstico · Casa inteligente</div>
+      <h1>Dispositivo smart Wi-Fi não conecta ou fica offline: como resolver</h1>
+      <p class="dek">Lâmpada, tomada, câmera ou assistente de voz que não pareia, não entra no Wi-Fi ou vive caindo. Comece pelo sintoma certo, confirme a causa com um teste e só então aplique a solução.</p>
+      <p class="lede prose">“Não conecta” pode significar coisas diferentes: o aparelho nem entra em modo de pareamento, o app não o encontra, ele entra no Wi-Fi mas aparece offline ou funciona por um tempo e cai. Separar esses sintomas evita mexer no roteador sem necessidade.</p>
+
+      <div class="scope-note">
+        <p><strong>Antes de começar:</strong> este guia é para dispositivos que se conectam diretamente ao <strong>Wi-Fi</strong>. Se a caixa ou o manual cita Zigbee, Thread, Matter over Thread ou “hub obrigatório”, confirme primeiro se o hub ou border router necessário está instalado e online.</p>
+      </div>
+
+      <nav class="symptom-nav" aria-label="Ir para o sintoma">
+        <a href="#causa-pareamento">Não entra em pareamento</a>
+        <a href="#causa-permissoes">O app não encontra</a>
+        <a href="#causa-wifi">Não entra no Wi-Fi</a>
+        <a href="#causa-sinal">Conecta e depois cai</a>
+      </nav>
+
+      <div class="cross-link">
+        <p class="tag">Guia relacionado</p>
+        <p>Se celulares, notebooks e outros aparelhos também estão lentos ou caindo, comece pelo nosso <a href="wifi-lento.html">guia de Wi-Fi lento e instável</a>. Se o problema acontece só com este dispositivo, continue aqui: ainda pode ser uma incompatibilidade específica entre ele e a rede.</p>
+      </div>
+    </header>
+
+    <section class="diag" id="diagnostico" aria-labelledby="diag-title">
+      <div class="diag-box">
+        <div class="eyebrow" style="margin-bottom:10px;"><span class="dot"></span> Diagnóstico rápido</div>
+        <h2 id="diag-title" style="margin-top:0;font-family:'Space Grotesk',sans-serif;">Responda 6 perguntas</h2>
+        <p class="diag-intro">O resultado é um direcionamento, não uma confirmação. Antes de mudar qualquer configuração, faça o teste indicado em “Como confirmar”.</p>
+
+        <form id="diagForm" novalidate>
+          <fieldset class="q">
+            <legend class="qtext">1. Qual descrição combina melhor com o problema?</legend>
+            <div class="opts">
+              <label><input type="radio" name="sintoma" value="pareamento"> Não entra no modo de pareamento</label>
+              <label><input type="radio" name="sintoma" value="nao-encontra"> O app não encontra</label>
+              <label><input type="radio" name="sintoma" value="nao-wifi"> Não entra no Wi-Fi</label>
+              <label><input type="radio" name="sintoma" value="cai"> Conecta e depois cai</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend class="qtext">2. Perto do roteador o dispositivo conecta ou fica mais estável?</legend>
+            <div class="opts"><label><input type="radio" name="perto" value="sim"> Sim</label><label><input type="radio" name="perto" value="nao"> Não</label><label><input type="radio" name="perto" value="nao-testado"> Ainda não testei</label></div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend class="qtext">3. O manual diz que o dispositivo aceita apenas Wi-Fi de 2,4 GHz?</legend>
+            <div class="opts"><label><input type="radio" name="banda" value="sim"> Sim</label><label><input type="radio" name="banda" value="nao"> Não, aceita 5 GHz também</label><label><input type="radio" name="banda" value="nao-sei"> Não sei</label></div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend class="qtext">4. O celular está com Bluetooth ligado e o app tem as permissões pedidas?</legend>
+            <div class="opts"><label><input type="radio" name="permissoes" value="sim"> Sim, conferi</label><label><input type="radio" name="permissoes" value="nao"> Não</label><label><input type="radio" name="permissoes" value="nao-sei"> Não sei</label></div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend class="qtext">5. O aparelho é usado ou o app diz que ele pertence a outra conta?</legend>
+            <div class="opts"><label><input type="radio" name="conta" value="sim"> Sim</label><label><input type="radio" name="conta" value="nao"> Não</label></div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend class="qtext">6. Ele está numa rede de convidados ou aparece conectado no roteador, mas não no app?</legend>
+            <div class="opts"><label><input type="radio" name="isolamento" value="sim"> Sim</label><label><input type="radio" name="isolamento" value="nao"> Não</label><label><input type="radio" name="isolamento" value="nao-sei"> Não sei</label></div>
+          </fieldset>
+
+          <div id="formError" class="form-error" role="alert" hidden></div>
+          <button type="submit" class="diag-btn">Ver onde investigar</button>
+        </form>
+
+        <div id="diagResult" class="diag-result" role="status" aria-live="polite" tabindex="-1" hidden></div>
+      </div>
+    </section>
+
+    <section class="categoria" aria-labelledby="dispositivo-title">
+      <div class="cat-label">Categoria 1 de 3</div>
+      <h2 class="cat-title" id="dispositivo-title">Antes da rede: aparelho e app</h2>
+      <p class="cat-desc">Estas causas impedem o processo antes mesmo de o dispositivo tentar entrar no Wi-Fi.</p>
+
+      <div class="cause-grid">
+        <section class="cause" id="causa-pareamento">
+          <div class="cause-head"><span class="impact alto">Prioridade alta</span><h3>Dispositivo fora do modo de pareamento</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 130" role="img" aria-label="LED piscando rápido indica modo de pareamento ativo; LED aceso fixo ou apagado indica que o tempo de pareamento expirou"><circle cx="120" cy="55" r="14" fill="var(--good)"><animate attributeName="opacity" values="1;0.2;1" dur="0.8s" repeatCount="indefinite"/></circle><text x="120" y="95" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--good)" font-weight="600">piscando rápido</text><text x="120" y="112" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--soft)">modo pareamento ativo</text><circle cx="470" cy="55" r="14" fill="var(--weak)" opacity="0.35"/><text x="470" y="95" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--weak)" font-weight="600">fixo ou apagado</text><text x="470" y="112" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--soft)">tempo expirou</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> estar ligado não significa estar pronto para ser adicionado ao app.</p>
+          <p class="body">A maioria dos dispositivos só aceita configuração durante alguns minutos depois que entra num modo específico. Uma luz piscando rápido, devagar ou em determinada cor costuma indicar modos diferentes, como “rápido/EZ” e “ponto de acesso/AP”.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">Confira no manual qual padrão de luz indica pareamento. Se a luz está fixa ou pisca de outro jeito, o aparelho provavelmente não está aguardando configuração.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Use o manual oficial do modelo para identificar o comando correto: segurar um botão, alternar a energia ou pressionar reset por alguns segundos.</li>
+            <li>Espere a luz entrar exatamente no padrão descrito pelo fabricante.</li>
+            <li>No app, selecione o mesmo modo mostrado pelo aparelho. Se o modo rápido falhar, procure a opção “AP”, “modo compatível” ou “luz piscando devagar”.</li>
+            <li>Conclua o processo antes de o tempo de pareamento expirar.</li>
+          </ol>
+        </section>
+
+        <section class="cause" id="causa-permissoes">
+          <div class="cause-head"><span class="impact alto">Prioridade alta</span><h3>Bluetooth ou permissões do app bloqueados</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 130" role="img" aria-label="Bluetooth desligado ou permissão de rede local/dispositivos próximos negada impede o app de encontrar o dispositivo"><rect x="70" y="30" width="150" height="60" rx="10" fill="none" stroke="var(--weak)" stroke-width="2"/><text x="145" y="65" text-anchor="middle" font-family="IBM Plex Sans" font-size="13" fill="var(--weak)" font-weight="600">Bluetooth: off</text><rect x="380" y="30" width="150" height="60" rx="10" fill="none" stroke="var(--weak)" stroke-width="2"/><text x="455" y="58" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--weak)" font-weight="600">Rede local</text><text x="455" y="75" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--weak)" font-weight="600">negada</text><text x="300" y="118" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--soft)">sem os dois, o app não "enxerga" o aparelho</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> muitos dispositivos usam Bluetooth para serem encontrados e recebem os dados do Wi-Fi pelo celular.</p>
+          <p class="body">No iPhone, o app pode precisar de acesso à Rede Local e ao Bluetooth. No Android, o nome varia com a versão: “Dispositivos por perto”, “Dispositivos Wi-Fi por perto”, Bluetooth e, em aparelhos mais antigos, Localização.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">Abra as permissões do app e veja se alguma está negada. Se o app encontra o dispositivo depois que Bluetooth e permissões são ativados, a causa foi confirmada.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li><strong>iPhone:</strong> Ajustes → Privacidade e Segurança → Rede Local; permita o app. Confira também Bluetooth. Não é necessário liberar localização “sempre” sem pedido explícito do fabricante.</li>
+            <li><strong>Android:</strong> Configurações → Apps → [app] → Permissões; permita “Dispositivos por perto”/“Dispositivos Wi-Fi por perto” e, se o app solicitar, Localização durante o uso.</li>
+            <li>Ligue o Bluetooth, feche completamente o app e abra de novo.</li>
+            <li>Tente adicionar o dispositivo novamente.</li>
+          </ol>
+        </section>
+
+        <section class="cause" id="causa-conta">
+          <div class="cause-head"><span class="impact medio">Prioridade média</span><h3>Dispositivo vinculado a outra conta</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 130" role="img" aria-label="Reset local apaga configuração de Wi-Fi do dispositivo, mas o vínculo de propriedade pode continuar registrado na nuvem do fabricante"><rect x="60" y="35" width="180" height="55" rx="8" fill="var(--bg)" stroke="var(--good)" stroke-width="2"/><text x="150" y="58" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--good)" font-weight="600">Reset local</text><text x="150" y="76" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--good)">apaga Wi-Fi ✓</text><rect x="360" y="35" width="180" height="55" rx="8" fill="var(--bg)" stroke="var(--warn)" stroke-width="2"/><text x="450" y="58" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--warn)" font-weight="600">Conta na nuvem</text><text x="450" y="76" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--warn)">pode continuar vinculada</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> resetar o aparelho pode apagar o Wi-Fi, mas nem sempre apaga a propriedade registrada na nuvem.</p>
+          <p class="body">Isso aparece principalmente em produto usado, recebido de outra pessoa ou cadastrado anteriormente numa conta sua diferente.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">A confirmação mais forte é uma mensagem como “já vinculado”, “já pertence a uma casa” ou “remova da conta anterior”. Parar no meio do pareamento sem mensagem não confirma esta causa sozinho.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Entre na conta anterior e remova o dispositivo pelo próprio app.</li>
+            <li>Se era de outra pessoa, peça que ela o remova da conta ou da “casa” antiga.</li>
+            <li>Depois da desvinculação, faça o reset indicado no manual e tente cadastrar novamente.</li>
+            <li>Se não houver acesso à conta anterior, procure o suporte oficial. Alguns fabricantes pedem número de série e comprovante de compra e podem não liberar aparelhos sem prova de propriedade.</li>
+          </ol>
+        </section>
+
+        <section class="cause" id="causa-app">
+          <div class="cause-head"><span class="impact variavel">Prioridade variável</span><h3>App ou firmware desatualizado</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 110" role="img" aria-label="Versão do app desatualizada em relação à versão mais recente disponível na loja pode causar bug específico de pareamento"><text x="150" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--weak)">instalado: v2.1</text><rect x="60" y="45" width="180" height="14" rx="7" fill="var(--weak)" opacity="0.6"/><text x="450" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--good)">loja: v3.4</text><rect x="360" y="45" width="180" height="14" rx="7" fill="var(--good)"/><text x="300" y="90" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--soft)">bug de pareamento corrigido em versão mais nova</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> versões incompatíveis podem quebrar apenas a descoberta ou o pareamento.</p>
+          <p class="body">O app, o sistema do celular e o firmware do dispositivo participam do processo. Uma atualização pendente ou uma falha temporária do serviço pode fazer o produto parecer defeituoso.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">Procure atualização na loja, confira a página de status ou suporte do fabricante e, se possível, teste o mesmo processo em outro celular. Relatos recentes ajudam, mas não são confirmação isolada.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Atualize o app e o sistema do celular.</li>
+            <li>Se o dispositivo ainda fica online, procure atualização de firmware no app.</li>
+            <li>Saia e entre novamente na conta. Antes de reinstalar o app, confirme que sabe a senha e tem acesso ao segundo fator.</li>
+            <li>Se houver indisponibilidade do fabricante, aguarde a normalização; resetar o aparelho não corrige uma falha na nuvem.</li>
+          </ol>
+        </section>
+      </div>
+    </section>
+
+    <section class="categoria" aria-labelledby="wifi-title">
+      <div class="cat-label">Categoria 2 de 3</div>
+      <h2 class="cat-title" id="wifi-title">O dispositivo não entra no Wi-Fi</h2>
+      <p class="cat-desc">Aqui o aparelho entra em modo de pareamento, mas não consegue concluir a conexão com o roteador.</p>
+
+      <div class="cause-grid">
+        <section class="cause" id="causa-wifi">
+          <div class="cause-head"><span class="impact alto">Prioridade alta</span><h3>Rede, senha ou segurança incompatível</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 110" role="img" aria-label="Senha digitada errada, SSID oculto ou modo de segurança WPA2-Enterprise não suportado impedem a entrada na rede"><rect x="30" y="30" width="160" height="50" rx="8" fill="none" stroke="var(--weak)" stroke-width="2"/><text x="110" y="60" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--weak)" font-weight="600">senha errada</text><rect x="220" y="30" width="160" height="50" rx="8" fill="none" stroke="var(--weak)" stroke-width="2"/><text x="300" y="60" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--weak)" font-weight="600">SSID oculto</text><rect x="410" y="30" width="160" height="50" rx="8" fill="none" stroke="var(--weak)" stroke-width="2"/><text x="490" y="55" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--weak)" font-weight="600">segurança</text><text x="490" y="70" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--weak)" font-weight="600">não suportada</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> senha incorreta, rede oculta ou configuração de segurança não suportada impedem a entrada no Wi-Fi.</p>
+          <p class="body">Dispositivos simples normalmente esperam uma rede doméstica WPA2-Personal. Redes corporativas com usuário e senha, SSID oculto, modo “somente Wi-Fi 6/ax”, WPA3-only ou gerenciamento obrigatório de quadros podem não ser suportados.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">Digite novamente a senha e confira no painel do roteador o tipo de segurança. Se o produto conecta numa rede de teste WPA2-Personal/AES, mas não na rede principal, existe incompatibilidade de configuração.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Confirme a senha conectando outro aparelho com ela — sem usar uma senha já salva.</li>
+            <li>Deixe o nome da rede visível durante o teste.</li>
+            <li>Prefira WPA2/WPA3 em modo de transição. Se o IoT ainda falhar, crie uma rede separada para ele em WPA2-Personal com AES; não use WEP, rede aberta nem TKIP.</li>
+            <li>Evite reduzir a segurança da rede principal quando o roteador permite uma rede IoT separada.</li>
+          </ol>
+        </section>
+
+        <section class="cause" id="causa-banda">
+          <div class="cause-head"><span class="impact alto">Prioridade alta</span><h3>Dispositivo aceita apenas 2,4 GHz</h3></div>
+          <div class="diagram">
+            <svg viewBox="0 0 600 175" role="img" aria-label="Dispositivo com rádio de 2,4 GHz enxerga a banda de 2,4 GHz, mas não a de 5 GHz">
+              <text x="300" y="24" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-soft)">O RÁDIO DO DISPOSITIVO DEFINE O QUE ELE ENXERGA</text>
+              <rect x="55" y="48" width="220" height="90" rx="10" fill="#E4F2EE" stroke="var(--good)" stroke-width="2"/>
+              <text x="165" y="87" text-anchor="middle" font-family="IBM Plex Sans" font-size="15" font-weight="600" fill="var(--good)">2,4 GHz</text>
+              <text x="165" y="111" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--good)">o dispositivo enxerga</text>
+              <rect x="325" y="48" width="220" height="90" rx="10" fill="#FDECE6" stroke="var(--weak)" stroke-width="2"/>
+              <text x="435" y="87" text-anchor="middle" font-family="IBM Plex Sans" font-size="15" font-weight="600" fill="var(--weak)">5 GHz</text>
+              <text x="435" y="111" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--weak)">não aparece para rádio 2,4-only</text>
+              <text x="300" y="163" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--ink-soft)">um SSID único não “empurra” um rádio 2,4-only para 5 GHz</text>
+            </svg>
+          </div>
+          <p class="resumo"><strong>Resumindo:</strong> muitos IoT básicos só possuem rádio de 2,4 GHz; o pareamento pode falhar se o app não lida bem com uma rede de nome único.</p>
+          <p class="body">Ter o mesmo nome para 2,4 e 5 GHz não é, por si só, um erro. Um dispositivo 2,4-only não consegue ser colocado em 5 GHz: ele simplesmente não enxerga essa banda. O problema aparece em alguns fluxos de configuração que exigem o celular temporariamente em 2,4 GHz ou funcionam mal com band steering.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">Confira a ficha técnica por uma indicação explícita como “Wi-Fi 2,4 GHz”. Não deduza apenas de “802.11n”, porque essa norma também pode operar em 5 GHz. Se o pareamento funciona ao forçar temporariamente celular e dispositivo na rede de 2,4 GHz, a incompatibilidade do fluxo foi confirmada.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>No painel do roteador, procure “Smart Connect”, “band steering” ou uma opção de rede IoT/2,4 GHz.</li>
+            <li>Use primeiro o modo IoT do roteador, se existir. Como teste temporário, pause 5 GHz ou dê nomes diferentes às bandas.</li>
+            <li>Conecte o celular à rede de 2,4 GHz e refaça o pareamento.</li>
+            <li>Depois de concluir, reative 5 GHz. Só mantenha nomes separados se o problema voltar e essa for a única solução confiável.</li>
+          </ol>
+        </section>
+
+        <section class="cause" id="causa-canal">
+          <div class="cause-head"><span class="impact medio">Prioridade média</span><h3>Canal ou modo de rádio incompatível</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 130" role="img" aria-label="Canais 1 a 11 funcionam para praticamente todo dispositivo; canais 12 e 13, usados em roteadores brasileiros, podem não ser enxergados por produto importado"><rect x="40" y="40" width="300" height="40" rx="6" fill="var(--good)" opacity="0.15"/><rect x="40" y="40" width="300" height="40" rx="6" fill="none" stroke="var(--good)" stroke-width="2"/><text x="190" y="65" text-anchor="middle" font-family="IBM Plex Sans" font-size="13" fill="var(--good)" font-weight="600">canais 1–11: compatível</text><rect x="360" y="40" width="180" height="40" rx="6" fill="var(--weak)" opacity="0.12"/><rect x="360" y="40" width="180" height="40" rx="6" fill="none" stroke="var(--weak)" stroke-width="2" stroke-dasharray="4 3"/><text x="450" y="65" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--weak)" font-weight="600">12–13: produto importado</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> alguns produtos importados não enxergam canais 12/13 ou falham em configurações modernas demais.</p>
+          <p class="body">No Brasil, a banda de 2,4 GHz pode usar canais que certos aparelhos destinados a outros mercados não suportam. Largura de 40 MHz, modo ax-only e opções avançadas também podem expor bugs de firmware.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">No painel, veja o canal atual da rede de 2,4 GHz. Se estiver em 12 ou 13, fixe temporariamente 1, 6 ou 11, com largura de 20 MHz, e tente de novo.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Acesse as configurações avançadas da rede de 2,4 GHz.</li>
+            <li>Defina largura de 20 MHz e escolha temporariamente canal 1, 6 ou 11.</li>
+            <li>Use modo misto compatível — por exemplo, b/g/n/ax — em vez de “ax-only”.</li>
+            <li>Se funcionar, mantenha a configuração compatível ou atualize o firmware do dispositivo antes de testar novamente o modo automático.</li>
+          </ol>
+        </section>
+
+        <section class="cause" id="causa-filtro">
+          <div class="cause-head"><span class="impact baixo">Prioridade baixa</span><h3>Filtro MAC ou limite de clientes</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 130" role="img" aria-label="Roteador com filtro MAC configurado bloqueia dispositivos novos que não estão na lista de permitidos"><circle cx="80" cy="65" r="10" fill="var(--teal)"/><text x="80" y="95" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--soft)">roteador</text><rect x="230" y="45" width="140" height="40" rx="6" fill="none" stroke="var(--weak)" stroke-width="2" stroke-dasharray="4 4"/><text x="300" y="70" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--weak)">FILTRO MAC</text><line x1="92" y1="65" x2="228" y2="65" stroke="var(--weak)" stroke-width="2"/><rect x="480" y="50" width="20" height="20" rx="4" fill="var(--soft)"/><text x="490" y="95" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--soft)">bloqueado</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> o roteador pode estar recusando aparelhos novos ou sem endereços disponíveis.</p>
+          <p class="body">Isso é mais provável quando alguém configurou uma lista de permitidos/bloqueados ou quando muitos aparelhos já estão conectados a um roteador básico.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">Procure “Controle de acesso”, “Filtro MAC”, “Clientes” e “DHCP”. Confirme se o filtro é de permitidos ou bloqueados, se o MAC do dispositivo aparece e se ainda há endereços disponíveis.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Desative o filtro apenas durante o teste ou adicione o MAC correto à lista apropriada.</li>
+            <li>Se o conjunto DHCP estiver cheio, amplie a faixa ou remova concessões antigas.</li>
+            <li>Tente parear novamente. Depois, restaure apenas as regras necessárias.</li>
+            <li>Não dependa de filtro MAC como proteção principal; use criptografia WPA2/WPA3 e senha forte.</li>
+          </ol>
+        </section>
+      </div>
+    </section>
+
+    <section class="categoria" aria-labelledby="quedas-title">
+      <div class="cat-label">Categoria 3 de 3</div>
+      <h2 class="cat-title" id="quedas-title">Conecta, mas fica offline ou cai</h2>
+      <p class="cat-desc">Se o pareamento termina, investigue alcance, energia, isolamento e dependência da internet ou da nuvem.</p>
+
+      <div class="cause-grid">
+        <section class="cause" id="causa-sinal">
+          <div class="cause-head"><span class="impact alto">Prioridade alta</span><h3>Sinal fraco no local</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 130" role="img" aria-label="Dispositivo smart longe do roteador ou dentro de caixa/luminária recebe sinal mais fraco que um celular no mesmo local"><rect x="40" y="25" width="520" height="80" fill="none" stroke="var(--ink)" stroke-width="2"/><line x1="300" y1="25" x2="300" y2="105" stroke="var(--ink)" stroke-width="4"/><circle cx="90" cy="65" r="6" fill="var(--teal)"/><circle cx="90" cy="65" r="20" fill="none" stroke="var(--teal)" stroke-width="2" opacity="0.5"/><circle cx="90" cy="65" r="34" fill="none" stroke="var(--teal)" stroke-width="2" opacity="0.25"/><text x="90" y="120" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--teal)">roteador</text><rect x="500" y="55" width="20" height="20" rx="4" fill="var(--weak)"/><text x="510" y="120" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--weak)">dispositivo — sinal fraco</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> a antena de um IoT pode ser pior que a do celular, principalmente dentro de caixas, luminárias ou junto a metal.</p>
+          <p class="body">O celular mostrar Wi-Fi não prova que o dispositivo tem sinal suficiente. Paredes, lajes, espelhos, metal e distância podem deixar a conexão no limite.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">Teste o dispositivo perto do roteador. Depois, volte ao local final. Se fica estável perto e cai novamente no ponto original, alcance é a causa mais provável.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Reposicione o roteador ou ponto mesh para reduzir obstáculos.</li>
+            <li>Evite instalar o dispositivo cercado por metal ou atrás de equipamentos elétricos.</li>
+            <li>Se o painel mostra RSSI, compare perto e no local final; quanto mais negativo o valor, mais fraco o sinal.</li>
+            <li>Se toda a região da casa tem cobertura ruim, siga o <a href="wifi-lento.html#causa-cobertura">guia de posição e cobertura do Wi-Fi</a>.</li>
+          </ol>
+        </section>
+
+        <section class="cause" id="causa-energia">
+          <div class="cause-head"><span class="impact alto">Prioridade alta</span><h3>Alimentação instável</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 110" role="img" aria-label="Tensão instável na tomada ou fonte fraca faz o dispositivo reiniciar sozinho, parecendo que caiu da rede"><polyline points="40,55 120,55 140,20 160,80 180,55 560,55" fill="none" stroke="var(--weak)" stroke-width="3"/><text x="150" y="100" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--weak)" font-weight="600">queda de tensão</text><text x="400" y="35" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--soft)">dispositivo reinicia sozinho</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> fonte, cabo ou tomada ruins fazem o aparelho reiniciar e parecer que “caiu da rede”.</p>
+          <p class="body">É comum em câmeras, hubs e assistentes alimentados por USB, mas também ocorre em interruptores, lâmpadas e tomadas com mau contato.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">Observe se LEDs reiniciam junto com a queda. Teste outra tomada e, quando aplicável, fonte e cabo com a mesma tensão e corrente recomendadas pelo fabricante.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Confira a especificação elétrica na etiqueta ou no manual.</li>
+            <li>Teste em outra tomada, sem extensão ou adaptador suspeito.</li>
+            <li>Em aparelhos USB, troque cabo e fonte por componentes adequados.</li>
+            <li>Se há aquecimento excessivo, cheiro ou marcas, desligue e procure assistência; não continue testando energizado.</li>
+          </ol>
+        </section>
+
+        <section class="cause" id="causa-isolamento">
+          <div class="cause-head"><span class="impact medio">Prioridade média</span><h3>Rede de convidados ou isolamento local</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 130" role="img" aria-label="Dispositivo conectado à rede de convidados aparece online no roteador mas não é encontrado pelo celular por causa do isolamento entre clientes"><circle cx="300" cy="35" r="10" fill="var(--teal)"/><text x="300" y="20" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--soft)">roteador</text><line x1="240" y1="40" x2="140" y2="90" stroke="var(--soft)" stroke-width="2"/><rect x="110" y="95" width="20" height="20" rx="4" fill="var(--soft)"/><text x="120" y="130" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--soft)">seu celular</text><line x1="360" y1="40" x2="460" y2="90" stroke="var(--weak)" stroke-width="2" stroke-dasharray="4 4"/><rect x="450" y="95" width="20" height="20" rx="4" fill="var(--weak)"/><text x="460" y="130" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--weak)">dispositivo (convidados)</text><text x="300" y="75" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--weak)">isolados entre si</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> o dispositivo pode estar conectado à internet, mas invisível para o celular dentro da casa.</p>
+          <p class="body">Redes de convidados e opções como “AP Isolation” ou “Client Isolation” podem bloquear comunicação entre clientes. Produtos controlados apenas pela nuvem talvez ainda funcionem; descoberta e controle local podem falhar.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">No painel do roteador, veja se o dispositivo recebeu IP. Se aparece conectado, mas o app não encontra localmente, confira o SSID e as opções de isolamento.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Durante o pareamento, coloque celular e dispositivo na rede principal ou numa rede IoT que permita a comunicação necessária.</li>
+            <li>Se usar rede de convidados, veja se existe opção “permitir acesso à rede local” — habilite apenas se entende o efeito de segurança.</li>
+            <li>Desative isolamento apenas no SSID necessário, não em toda a rede sem motivo.</li>
+          </ol>
+        </section>
+
+        <section class="cause" id="causa-nuvem">
+          <div class="cause-head"><span class="impact variavel">Prioridade variável</span><h3>Internet, DNS ou nuvem do fabricante</h3></div>
+          <div class="diagram"><svg viewBox="0 0 600 110" role="img" aria-label="Dispositivo mostra conectado no painel do roteador, mas o app mostra offline porque não alcança o serviço na nuvem do fabricante"><rect x="40" y="30" width="180" height="50" rx="8" fill="var(--good)" opacity="0.12"/><rect x="40" y="30" width="180" height="50" rx="8" fill="none" stroke="var(--good)" stroke-width="2"/><text x="130" y="60" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--good)" font-weight="600">roteador: online</text><rect x="380" y="30" width="180" height="50" rx="8" fill="var(--weak)" opacity="0.1"/><rect x="380" y="30" width="180" height="50" rx="8" fill="none" stroke="var(--weak)" stroke-width="2"/><text x="470" y="60" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--weak)" font-weight="600">nuvem: inacessível</text></svg></div>
+          <p class="resumo"><strong>Resumindo:</strong> alguns aparelhos estão no Wi-Fi, mas aparecem offline porque não alcançam o serviço do fabricante.</p>
+          <p class="body">Isso pode vir da internet de casa, DNS, bloqueio no roteador, servidor do fabricante ou região incorreta da conta. Resetar o produto costuma piorar, porque ele precisará acessar a mesma nuvem para ser cadastrado novamente.</p>
+          <p class="tag">Como confirmar</p>
+          <p class="confirm">Veja se o roteador mostra o aparelho conectado e com IP. Teste a internet em outro aparelho, consulte o status oficial do fabricante e observe se vários produtos da mesma marca ficaram offline ao mesmo tempo.</p>
+          <p class="tag">Passo a passo para resolver</p>
+          <ol class="steps">
+            <li>Se toda a internet caiu, resolva primeiro a conexão da casa.</li>
+            <li>Desative temporariamente VPN, DNS filtrado ou bloqueio parental apenas para testar.</li>
+            <li>Confira se a região da conta é a mesma usada no cadastro original.</li>
+            <li>Se o serviço do fabricante está indisponível, aguarde. Não faça reset até a normalização.</li>
+          </ol>
+        </section>
+      </div>
+    </section>
+
+    <section class="last-resort" id="ultimo-recurso">
+      <h2>Último recurso: reset de fábrica</h2>
+      <p>Use reset somente depois de confirmar modo de pareamento, permissões, alimentação e compatibilidade da rede. Ele apaga configurações locais e pode exigir recriar automações; também não remove necessariamente um vínculo de conta mantido na nuvem.</p>
+      <ol>
+        <li>Registre automações e configurações que precisará refazer.</li>
+        <li>Siga o procedimento do manual ou suporte oficial do modelo.</li>
+        <li>Remova o dispositivo do app quando o fabricante orientar essa ordem.</li>
+        <li>Refaça o pareamento perto do roteador.</li>
+        <li>Se continua sem entrar em modo de pareamento ou reinicia mesmo com alimentação boa, acione troca, garantia ou assistência.</li>
+      </ol>
+    </section>
+
+    <section style="margin-top:44px;" aria-labelledby="checklist-title">
+      <h2 id="checklist-title" style="font-family:'Space Grotesk',sans-serif;">Checklist rápido</h2>
+      <ul class="checklist">
+        <li><span class="n">01</span> Confirmei que o produto é Wi-Fi ou que o hub necessário está online.</li>
+        <li><span class="n">02</span> Coloquei o aparelho no padrão correto de pareamento.</li>
+        <li><span class="n">03</span> Liguei Bluetooth e liberei as permissões necessárias no app.</li>
+        <li><span class="n">04</span> Testei perto do roteador e depois no local final.</li>
+        <li><span class="n">05</span> Confirmei senha, 2,4 GHz e segurança compatível.</li>
+        <li><span class="n">06</span> Verifiquei tomada, fonte e cabo.</li>
+        <li><span class="n">07</span> Conferi vínculo de conta, app e firmware.</li>
+        <li><span class="n">08</span> Só considerei reset depois dos testes acima.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top:46px;" aria-labelledby="faq-title">
+      <h2 id="faq-title" style="font-family:'Space Grotesk',sans-serif;">Perguntas frequentes</h2>
+      <div class="faq">
+        <details>
+          <summary>Preciso separar as redes de 2,4 e 5 GHz?</summary>
+          <p>Não necessariamente. Um dispositivo 2,4-only não é empurrado para 5 GHz só porque as bandas têm o mesmo nome. Separar as bandas ou pausar 5 GHz é um teste útil quando o app de pareamento não lida bem com a rede unificada; depois, você pode reativar a configuração anterior e verificar se o aparelho permanece estável.</p>
+        </details>
+        <details>
+          <summary>O dispositivo aparece no roteador, mas está offline no app. O que significa?</summary>
+          <p>Ele já entrou no Wi-Fi. Investigue isolamento local, acesso à internet, DNS, região da conta e indisponibilidade da nuvem do fabricante antes de resetar.</p>
+        </details>
+        <details>
+          <summary>Dispositivo smart funciona sem internet?</summary>
+          <p>Depende do produto. Alguns mantêm controle e automações locais; outros dependem da nuvem até para comandos no mesmo ambiente. Zigbee, Thread ou Matter não garantem funcionamento offline por si só — o controlador e a automação também precisam operar localmente.</p>
+        </details>
+        <details>
+          <summary>Trocar o roteador resolve?</summary>
+          <p>Só quando o problema confirmado é cobertura, limite de clientes, falha do equipamento ou uma incompatibilidade que ele não permite contornar. Modo de pareamento, vínculo de conta, fonte ruim e queda da nuvem não são resolvidos com roteador novo.</p>
+        </details>
+      </div>
+    </section>
+  </article>
+
+  <footer class="site" id="sobre">
+    <div class="brand"><span class="bars"><i></i><i></i><i></i><i></i></span> Base Tech</div>
+    <p>Guias práticos sobre rede doméstica, automação e tecnologia aplicada ao dia a dia — escritos e revisados por quem realmente mexe nisso.</p>
+    <p><strong>Revisão técnica:</strong> Equipe Base Tech · <time datetime="2026-08-19">Atualizado em 19 de agosto de 2026</time></p>
+  </footer>
+</main>
+
+<script>
+  document.getElementById('diagForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const names = ['sintoma','perto','banda','permissoes','conta','isolamento'];
+    const val = (name) => document.querySelector(`input[name="${name}"]:checked`)?.value || null;
+    const faltantes = names.filter(name => !val(name));
+    const errorEl = document.getElementById('formError');
+
+    if(faltantes.length){
+      errorEl.hidden = false;
+      errorEl.textContent = `Falta responder ${faltantes.length === 1 ? '1 pergunta' : `${faltantes.length} perguntas`}. Complete o diagnóstico antes de continuar.`;
+      const first = document.querySelector(`input[name="${faltantes[0]}"]`);
+      first.focus();
+      return;
+    }
+    errorEl.hidden = true;
+
+    const resposta = Object.fromEntries(names.map(name => [name,val(name)]));
+    const scores = new Map();
+    const add = (id,nome,peso) => {
+      const atual = scores.get(id) || {id,nome,peso:0};
+      atual.peso += peso;
+      scores.set(id,atual);
+    };
+
+    if(resposta.sintoma === 'pareamento'){
+      add('causa-pareamento','Modo de pareamento',5);
+      add('causa-permissoes','Bluetooth e permissões',2);
+      add('causa-conta','Vínculo com outra conta',1);
+    }
+    if(resposta.sintoma === 'nao-encontra'){
+      add('causa-permissoes','Bluetooth e permissões',4);
+      add('causa-isolamento','Isolamento da rede',3);
+      add('causa-pareamento','Modo de pareamento',2);
+    }
+    if(resposta.sintoma === 'nao-wifi'){
+      add('causa-wifi','Senha ou segurança incompatível',4);
+      add('causa-banda','Compatibilidade com 2,4 GHz',2);
+      add('causa-canal','Canal ou modo de rádio',1);
+    }
+    if(resposta.sintoma === 'cai'){
+      add('causa-sinal','Sinal fraco',3);
+      add('causa-energia','Alimentação instável',3);
+      add('causa-nuvem','Internet ou nuvem do fabricante',2);
+    }
+
+    if(resposta.perto === 'sim') add('causa-sinal','Sinal fraco',5);
+    if(resposta.perto === 'nao-testado') add('causa-sinal','Faça primeiro o teste perto do roteador',1);
+    if(resposta.banda === 'sim') add('causa-banda','Compatibilidade com 2,4 GHz',3);
+    if(resposta.banda === 'nao-sei') add('causa-banda','Confirme a banda na ficha técnica',1);
+    if(resposta.permissoes === 'nao') add('causa-permissoes','Bluetooth e permissões',5);
+    if(resposta.permissoes === 'nao-sei') add('causa-permissoes','Confira Bluetooth e permissões',2);
+    if(resposta.conta === 'sim') add('causa-conta','Vínculo com outra conta',5);
+    if(resposta.isolamento === 'sim') add('causa-isolamento','Rede de convidados ou isolamento',5);
+    if(resposta.isolamento === 'nao-sei' && resposta.sintoma === 'nao-encontra') add('causa-isolamento','Confira isolamento da rede',1);
+
+    const causas = [...scores.values()].sort((a,b)=> b.peso-a.peso || a.nome.localeCompare(b.nome)).slice(0,5);
+
+    const resultEl = document.getElementById('diagResult');
+    resultEl.hidden = false;
+    let html = `<h3>Onde investigar primeiro</h3><p style="font-size:0.88rem;color:var(--ink-soft);margin:-6px 0 14px;">A ordem combina o sintoma com suas outras respostas. Confirme cada causa antes de alterar a rede ou resetar o aparelho.</p>`;
+    causas.forEach((c,index) => {
+      html += `<div class="diag-item"><span><strong>${index+1}.</strong> ${c.nome}</span><a href="#${c.id}">como confirmar →</a></div>`;
+    });
+    resultEl.innerHTML = html;
+    resultEl.focus({preventScroll:true});
+    resultEl.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth', block:'start'});
+  });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"Dispositivo smart Wi-Fi não conecta ou fica offline: como resolver",
+  "description":"Diagnóstico por sintoma, testes práticos e soluções para dispositivos smart Wi-Fi que não conectam ou vivem caindo.",
+  "inLanguage":"pt-BR",
+  "dateModified":"2026-08-19",
+  "author":{"@type":"Organization","name":"Base Tech"},
+  "publisher":{"@type":"Organization","name":"Base Tech"},
+  "mainEntityOfPage":"https://basetech-br.github.io/base-tech/dispositivo-nao-conecta.html"
+}
+</script>
+
+</body>
+</html>
