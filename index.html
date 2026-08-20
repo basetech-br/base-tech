@@ -3,210 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Por que seu Wi-Fi está lento (e como resolver de verdade) | Base Tech</title>
-<meta name="description" content="Guia completo para diagnosticar e resolver Wi-Fi lento em casa: causas dentro de casa, do lado do provedor e de uso da rede — com diagnóstico interativo.">
+<title>Base Tech — Tecnologia para a vida real</title>
+<meta name="description" content="Guias práticos de tecnologia — rede doméstica, automação e casa inteligente. Diagnóstico antes da solução, passo a passo real, sem hype.">
 <link rel="icon" type="image/png" sizes="32x32" href="identidade/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="identidade/favicon-512.png">
 <link rel="apple-touch-icon" href="identidade/apple-touch-icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #F3F5F4;
-    --bg-raised: #FFFFFF;
-    --ink: #14213D;
-    --ink-soft: #4A5568;
-    --good: #1C7C54;
-    --warn: #C98A00;
-    --weak: #C1440E;
-    --line: #DDE3E1;
-    --teal: #0E7C86;
-    --radius: 14px;
+    --bg: #F3F5F4; --bg-raised: #FFFFFF; --ink: #14213D; --ink-soft: #4A5568;
+    --good: #1C7C54; --warn: #A66E00; --weak: #C1440E; --line: #DDE3E1; --teal: #0E7C86; --radius: 14px;
   }
   *{ box-sizing: border-box; }
   html{ scroll-behavior: smooth; }
-  body{
-    margin:0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'IBM Plex Sans', system-ui, sans-serif;
-    line-height: 1.6;
-  }
+  body{ margin:0; background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; line-height: 1.6; }
   a{ color: var(--teal); }
   img, svg{ max-width:100%; }
-
   .wrap{ max-width: 1120px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
-  .prose{ max-width: 700px; }
 
   header.site{ border-bottom: 1px solid var(--line); padding: 18px 0; }
-  .site-head{
-    display:flex; align-items:center; justify-content:space-between;
-    max-width: 1120px; margin:0 auto; padding: 0 clamp(20px, 4vw, 48px);
-  }
-  .brand{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700; font-size:1.15rem; letter-spacing:-0.01em;
-    display:flex; align-items:center; gap:10px;
-  }
+  .site-head{ display:flex; align-items:center; justify-content:space-between; max-width: 1120px; margin:0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .brand{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:1.15rem; letter-spacing:-0.01em; display:flex; align-items:center; gap:10px; }
   .brand .bars{ display:flex; align-items:flex-end; gap:2px; height:16px; }
   .brand .bars i{ width:4px; background: var(--good); display:block; border-radius:1px; }
-  .brand .bars i:nth-child(1){ height:5px; }
-  .brand .bars i:nth-child(2){ height:9px; }
-  .brand .bars i:nth-child(3){ height:13px; }
-  .brand .bars i:nth-child(4){ height:16px; }
+  .brand .bars i:nth-child(1){ height:5px; } .brand .bars i:nth-child(2){ height:9px; }
+  .brand .bars i:nth-child(3){ height:13px; } .brand .bars i:nth-child(4){ height:16px; }
   nav.site a{ font-size:0.85rem; color: var(--ink-soft); text-decoration:none; margin-left:18px; }
   nav.site a:hover{ color: var(--teal); }
 
-  .hero{ padding: 56px 0 28px; }
-  .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em;
-    color: var(--teal); display:flex; align-items:center; gap:8px; margin-bottom:14px;
-  }
+  /* Hero */
+  .hero{ padding: 64px 0 40px; position:relative; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns: 1fr; gap:40px; align-items:center; }
+  @media (min-width: 900px){ .hero-grid{ grid-template-columns: 1.1fr 0.9fr; } }
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color: var(--teal); display:flex; align-items:center; gap:8px; margin-bottom:16px; }
   .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background: var(--good); }
-  h1{
-    font-family:'Space Grotesk', sans-serif;
-    font-size: clamp(1.9rem, 4vw, 2.9rem);
-    line-height:1.12; letter-spacing:-0.02em; margin: 0 0 16px;
-    max-width: 18ch;
-  }
-  .dek{ font-size:1.08rem; color: var(--ink-soft); max-width: 62ch; margin: 0 0 28px; }
+  h1{ font-family:'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height:1.08; letter-spacing:-0.02em; margin: 0 0 18px; }
+  h1 em{ font-style:normal; color: var(--teal); }
+  .hero-sub{ font-size:1.12rem; color: var(--ink-soft); max-width: 52ch; margin: 0 0 28px; }
+  .hero-cta{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:0.95rem; padding: 13px 24px; border-radius: 9px; text-decoration:none; display:inline-block; }
+  .btn-primary{ background: var(--ink); color:#fff; }
+  .btn-primary:hover{ background: var(--teal); }
+  .btn-ghost{ border: 1px solid var(--line); color: var(--ink); background: var(--bg-raised); }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); }
 
-  .meter{ display:flex; align-items:flex-end; gap:5px; height:46px; margin: 8px 0 36px; max-width:320px; }
-  .meter i{
-    flex:1; max-width: 46px; border-radius: 3px 3px 0 0;
+  /* Hero visual: big signal bars, animated */
+  .hero-visual{ display:flex; align-items:flex-end; justify-content:center; height:260px; gap:14px; }
+  .hero-visual i{
+    display:block; width:15%; max-width:52px; border-radius:8px 8px 0 0;
     background: linear-gradient(180deg, var(--weak), var(--warn) 55%, var(--good));
-    opacity:0.16; transform: scaleY(0.15); transform-origin: bottom;
-    transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 900ms ease;
+    opacity:0; transform: scaleY(0.1); transform-origin:bottom;
+    transition: transform 1000ms cubic-bezier(.2,.9,.2,1), opacity 800ms ease;
   }
-  .meter.live i{ opacity:1; }
-  .meter i:nth-child(1){ height:20%; transition-delay: 60ms; }
-  .meter i:nth-child(2){ height:40%; transition-delay: 160ms; }
-  .meter i:nth-child(3){ height:62%; transition-delay: 260ms; }
-  .meter i:nth-child(4){ height:82%; transition-delay: 360ms; }
-  .meter i:nth-child(5){ height:100%; transition-delay: 460ms; }
-  .meter.live i{ transform: scaleY(1); }
+  .hero-visual.live i{ opacity:1; transform: scaleY(1); }
+  .hero-visual i:nth-child(1){ height:26%; transition-delay:80ms; }
+  .hero-visual i:nth-child(2){ height:46%; transition-delay:180ms; }
+  .hero-visual i:nth-child(3){ height:66%; transition-delay:280ms; }
+  .hero-visual i:nth-child(4){ height:84%; transition-delay:380ms; }
+  .hero-visual i:nth-child(5){ height:100%; transition-delay:480ms; }
 
-  .lede{ font-size:1.05rem; }
+  /* Pillars */
+  .pillars{ padding: 8px 0 50px; }
+  .pillars-grid{ display:grid; grid-template-columns: 1fr; gap:18px; }
+  @media (min-width: 760px){ .pillars-grid{ grid-template-columns: repeat(3,1fr); } }
+  .pillar{ background: var(--bg-raised); border:1px solid var(--line); border-radius: var(--radius); padding:22px; }
+  .pillar .num{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color: var(--teal); margin-bottom:10px; display:block; }
+  .pillar h3{ font-family:'Space Grotesk', sans-serif; font-size:1.02rem; margin:0 0 8px; }
+  .pillar p{ margin:0; font-size:0.92rem; color: var(--ink-soft); }
 
-  .diag{ padding: 6px 0 10px; }
-  .diag-box{
-    background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 28px clamp(20px,4vw,34px); max-width: 760px;
-  }
-  .q{ padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .q:last-of-type{ border-bottom:none; }
-  .qtext{ margin: 0 0 10px; font-weight:500; font-size:0.97rem; }
-  .opts{ display:flex; gap:20px; flex-wrap:wrap; }
-  .opts label{ display:flex; align-items:center; gap:7px; font-size:0.92rem; color: var(--ink-soft); cursor:pointer; }
-  .opts input{ accent-color: var(--teal); width:16px; height:16px; }
-  .diag-btn{
-    margin-top: 22px; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:0.95rem;
-    background: var(--ink); color: #fff; border:none; padding: 12px 22px; border-radius: 8px; cursor:pointer;
-  }
-  .diag-btn:hover{ background: var(--teal); }
-  .diag-result{ margin-top: 24px; padding-top: 22px; border-top: 1px dashed var(--line); }
-  .diag-result h3{ font-family:'Space Grotesk', sans-serif; font-size:1.05rem; margin: 0 0 14px; }
-  .diag-item{
-    display:flex; align-items:center; justify-content:space-between;
-    padding: 12px 14px; margin-bottom:8px; background: var(--bg); border-radius:8px; font-size:0.92rem;
-  }
-  .diag-item a{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-decoration:none; }
-  .diag-empty{ color: var(--ink-soft); font-size:0.92rem; }
+  /* Featured guides */
+  .section-head{ margin: 10px 0 26px; }
+  .section-head h2{ font-family:'Space Grotesk', sans-serif; font-size:1.6rem; margin:0 0 8px; letter-spacing:-0.01em; }
+  .section-head p{ color: var(--ink-soft); margin:0; max-width:65ch; }
 
-  .categoria{ padding: 46px 0 8px; }
-  .cat-label{
-    font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase;
-    letter-spacing:0.08em; color: var(--teal); margin-bottom:6px;
-  }
-  .cat-title{ font-family:'Space Grotesk', sans-serif; font-size:1.5rem; margin:0 0 8px; letter-spacing:-0.01em; }
-  .cat-desc{ color: var(--ink-soft); max-width:70ch; margin: 0 0 26px; }
+  .guides{ padding: 30px 0 20px; }
+  .guide-grid{ display:grid; grid-template-columns: 1fr; gap:22px; }
+  @media (min-width: 800px){ .guide-grid{ grid-template-columns: 1fr 1fr; } }
 
-  .cause-grid{ display:grid; grid-template-columns: 1fr; gap:22px; }
-  @media (min-width: 880px){
-    .cause-grid{ grid-template-columns: 1fr 1fr; }
-  }
+  .guide-card{ background: var(--bg-raised); border:1px solid var(--line); border-radius: var(--radius); overflow:hidden; display:flex; flex-direction:column; text-decoration:none; color:inherit; transition: transform .15s ease, box-shadow .15s ease; }
+  .guide-card:hover{ transform: translateY(-3px); box-shadow: 0 12px 24px -14px rgba(20,33,61,0.25); }
+  .guide-visual{ height:150px; background: var(--bg); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:center; }
+  .guide-body{ padding:22px 24px 26px; }
+  .guide-cat{ font-family:'IBM Plex Mono', monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color: var(--teal); margin-bottom:10px; }
+  .guide-card h3{ font-family:'Space Grotesk', sans-serif; font-size:1.2rem; margin:0 0 10px; color: var(--ink); line-height:1.25; }
+  .guide-card p.desc{ font-size:0.93rem; color: var(--ink-soft); margin:0 0 16px; }
+  .guide-link{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color: var(--teal); font-weight:600; }
 
-  .cause{
-    background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 22px 24px; display:flex; flex-direction:column; gap:14px;
-  }
-  .cause-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-  .impact{
-    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em;
-    padding: 3px 9px; border-radius: 20px; font-weight:600; white-space:nowrap;
-  }
-  .impact.alto{ background:#FDECE6; color: var(--weak); }
-  .impact.medio{ background:#FBF1DC; color: var(--warn); }
-  .impact.variavel{ background:#E4F2EE; color: var(--good); }
-  .cause h3{ font-family:'Space Grotesk', sans-serif; font-size:1.05rem; margin:0; }
+  /* Coming soon */
+  .soon{ padding: 44px 0 60px; }
+  .soon-box{ background: linear-gradient(135deg, #EAF4F2, #F3F5F4); border:1px solid var(--line); border-radius: var(--radius); padding:26px 28px; max-width:820px; }
+  .soon-box .tag{ font-family:'IBM Plex Mono', monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color: var(--teal); margin:0 0 8px; }
+  .soon-box p{ margin:0; font-size:0.96rem; color: var(--ink-soft); }
+  .soon-tags{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+  .soon-tags span{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; background: var(--bg-raised); border:1px solid var(--line); padding:5px 12px; border-radius:20px; color: var(--ink-soft); }
 
-  .diagram{
-    background: var(--bg); border: 1px solid var(--line); border-radius:10px;
-    padding: 14px; display:flex; align-items:center; justify-content:center;
-  }
-  .diagram svg{ width:100%; height:auto; display:block; }
-
-  .resumo{ font-size:0.92rem; color: var(--ink-soft); margin:0; }
-  .cause p.body{ margin:0; font-size:0.96rem; }
-  .cause .tag{
-    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color: var(--ink-soft);
-    text-transform:uppercase; letter-spacing:0.05em; margin: 4px 0 0;
-  }
-  .cause .fix{ margin:2px 0 0; font-size:0.96rem; }
-  .cause .confirm{ margin:2px 0 0; font-size:0.96rem; }
-  .cause .steps{ margin:6px 0 0; padding-left:20px; font-size:0.96rem; }
-  .cause .steps li{ margin-bottom:7px; }
-  .cause .steps li:last-child{ margin-bottom:0; }
-
-  .painel-box{
-    background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 22px 24px; margin: 32px 0; max-width: 820px;
-  }
-  .painel-box h3{ font-family:'Space Grotesk', sans-serif; font-size:1.05rem; margin:0 0 10px; }
-  .painel-box ol{ margin:0; padding-left:20px; font-size:0.96rem; }
-  .painel-box li{ margin-bottom:7px; }
-  .painel-box .ips{ font-family:'IBM Plex Mono', monospace; font-size:0.85rem; background:var(--bg); padding:2px 6px; border-radius:4px; }
-
-  .callout{
-    border-left: 3px solid var(--teal); padding: 4px 0 4px 18px; margin: 34px 0;
-    color: var(--ink-soft); font-size:0.95rem; max-width: 760px;
-  }
-
-  .checklist{ list-style:none; padding:0; margin: 18px 0 0; max-width:760px; }
-  .checklist li{
-    display:flex; gap:10px; align-items:flex-start; padding: 10px 0; border-bottom: 1px solid var(--line);
-    font-size:0.97rem;
-  }
-  .checklist li:last-child{ border-bottom:none; }
-  .checklist .n{ font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color: var(--teal); flex-shrink:0; padding-top:2px; }
-
-  footer.site{ border-top:1px solid var(--line); padding: 34px 0 50px; color: var(--ink-soft); font-size:0.85rem; margin-top:50px; }
+  footer.site{ border-top:1px solid var(--line); padding: 34px 0 50px; color: var(--ink-soft); font-size:0.85rem; margin-top:10px; }
   footer.site .brand{ margin-bottom:8px; }
   footer.site .bars i{ background: var(--ink-soft); }
 
-  .faq{ max-width:760px; }
-  .faq details{
-    border-bottom: 1px solid var(--line); padding: 14px 0;
-  }
-  .faq summary{
-    cursor:pointer; font-weight:600; font-size:0.98rem; list-style:none;
-  }
-  .faq summary::-webkit-details-marker{ display:none; }
-  .faq summary::before{ content:"+ "; color: var(--teal); font-weight:700; }
-  .faq details[open] summary::before{ content:"– "; }
-  .faq p{ margin: 10px 0 0; color: var(--ink-soft); font-size:0.95rem; }
-
-  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible{
-    outline: 3px solid var(--teal); outline-offset: 2px;
-  }
-  .skip-link{
-    position:absolute; left:-9999px; top:0; background:var(--ink); color:#fff;
-    padding:10px 16px; z-index:100; border-radius:0 0 8px 0;
-  }
+  a:focus-visible, button:focus-visible{ outline: 3px solid var(--teal); outline-offset: 2px; }
+  .skip-link{ position:absolute; left:-9999px; top:0; background:var(--ink); color:#fff; padding:10px 16px; z-index:100; border-radius:0 0 8px 0; }
   .skip-link:focus{ left:0; }
+  .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
-  @media (prefers-reduced-motion: reduce){ .meter i{ transition:none; } }
+  @media (prefers-reduced-motion: reduce){ * { transition:none !important; } }
 </style>
 </head>
 <body>
@@ -216,484 +117,96 @@
 <header class="site">
   <div class="site-head">
     <div class="brand"><span class="bars"><i></i><i></i><i></i><i></i></span> Base Tech</div>
-    <nav class="site" aria-label="Navegação principal"><a href="#artigo">Guias</a><a href="#sobre">Sobre</a></nav>
+    <nav class="site" aria-label="Navegação principal"><a href="#guias">Guias</a><a href="#sobre">Sobre</a></nav>
   </div>
 </header>
 
-<main class="wrap" id="conteudo">
-  <section class="hero" id="artigo">
-    <div class="eyebrow"><span class="dot"></span> Diagnóstico · Wi-Fi doméstico</div>
-    <h1>Por que seu Wi-Fi está lento (e como resolver de verdade)</h1>
-    <p class="dek">Sem indicação de app milagroso nem "reinicie o roteador e reze". Este é o guia completo: causas dentro de casa, do lado do provedor e de uso da rede — em ordem de probabilidade, com o passo a passo de cada uma.</p>
-
-    <div class="meter" id="meter"><i></i><i></i><i></i><i></i><i></i></div>
-
-    <p class="lede prose">Se você já reiniciou o roteador, mudou de operadora e o problema continua, vale separar as coisas: existe o que acontece <strong>dentro de casa</strong> (rede Wi-Fi), o que vem <strong>de fora</strong> (provedor e infraestrutura) e o que é <strong>uso da própria rede</strong> (quantos dispositivos, quem está conectado). A maioria dos guias mistura tudo isso — aqui está separado, causa por causa, com como confirmar e como resolver.</p>
-
-    <div class="painel-box" style="border-color:var(--teal);">
-      <h3>Passo zero: é Wi-Fi ou é internet?</h3>
-      <p style="margin:0;font-size:0.96rem;">Antes de qualquer causa abaixo, um teste de 1 minuto separa os dois problemas: conecte um notebook <strong>com cabo de rede direto no roteador</strong> (sem Wi-Fi) e rode um teste de velocidade (speedtest.net ou fast.com). Se a velocidade no cabo já vem baixa, o problema é da internet contratada/provedor — nenhuma das causas de Wi-Fi abaixo vai resolver isso. Se no cabo vem rápido e só o Wi-Fi é lento, aí sim continue no guia.</p>
-    </div>
-
-    <div class="painel-box">
-      <h3>Como acessar o painel do seu roteador</h3>
-      <p style="margin:0 0 10px;font-size:0.96rem;">Boa parte dos passos abaixo pede pra você entrar nas configurações do roteador. É sempre assim:</p>
-      <ol>
-        <li>Conecte no Wi-Fi de casa (ou use um cabo direto no roteador) e abra o navegador.</li>
-        <li>Digite o endereço do roteador na barra de endereço: o mais comum é <span class="ips">192.168.0.1</span> ou <span class="ips">192.168.1.1</span>. Se nenhum funcionar, veja o endereço certo numa etiqueta colada embaixo/atrás do aparelho.</li>
-        <li>Faça login. Usuário e senha padrão também costumam estar na etiqueta do roteador (comum: <span class="ips">admin / admin</span> ou <span class="ips">admin / senha em branco</span>). Se alguém já trocou e você não sabe qual é, dá pra resetar o roteador (botão pequeno, segurar uns 10s) — isso volta tudo ao padrão de fábrica, então só faça se estiver sem outra opção.</li>
-        <li>Uma vez dentro, as opções citadas neste guia (canal, nome da rede 2.4/5GHz, firmware, dispositivos conectados) geralmente ficam em menus chamados "Wireless", "Configurações sem fio", "Rede" ou "Avançado" — o nome varia por marca.</li>
-      </ol>
+<main id="conteudo">
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Portal de tecnologia prática</div>
+        <h1>Tecnologia <em>para a vida real</em>, não pra assustar você</h1>
+        <p class="hero-sub">Guias que diagnosticam antes de indicar solução, com passo a passo de verdade — sem "reinicie e reze" genérico, sem hype de IA, sem venda de produto disfarçada de conteúdo.</p>
+        <div class="hero-cta">
+          <a href="#guias" class="btn btn-primary">Ver guias disponíveis</a>
+          <a href="#como-funciona" class="btn btn-ghost">Como funciona</a>
+        </div>
+      </div>
+      <div class="hero-visual" id="heroVisual"><i></i><i></i><i></i><i></i><i></i></div>
     </div>
   </section>
 
-  <section class="diag" id="diagnostico">
-    <div class="diag-box">
-      <div class="eyebrow" style="margin-bottom:10px;"><span class="dot"></span> Diagnóstico rápido</div>
-      <h2 style="margin-top:0;font-family:'Space Grotesk',sans-serif;">Responda 7 perguntas simples</h2>
-      <p style="color:var(--ink-soft);font-size:0.95rem;margin-bottom:22px;">Sem precisar instalar nada nem ler número técnico. A gente aponta a(s) causa(s) mais provável(is) no seu caso e te leva direto pra solução.</p>
-
-      <form id="diagForm">
-        <div class="q">
-          <p class="qtext">1. Você mora em apartamento ou casa com vizinhos próximos (menos de uns 10 metros)?</p>
-          <div class="opts"><label><input type="radio" name="q1" value="sim"> Sim</label><label><input type="radio" name="q1" value="nao"> Não</label></div>
-        </div>
-        <div class="q">
-          <p class="qtext">2. O roteador fica escondido (armário, atrás da TV) ou num canto da casa?</p>
-          <div class="opts"><label><input type="radio" name="q2" value="sim"> Sim</label><label><input type="radio" name="q2" value="nao"> Não, fica em local central/aberto</label></div>
-        </div>
-        <div class="q">
-          <p class="qtext">3. As redes 2.4GHz e 5GHz do seu roteador têm o mesmo nome (rede "unificada")?</p>
-          <div class="opts"><label><input type="radio" name="q3" value="sim"> Sim, ou não sei</label><label><input type="radio" name="q3" value="nao"> Não, são nomes diferentes</label></div>
-        </div>
-        <div class="q">
-          <p class="qtext">4. Você usa algum repetidor de sinal na tomada?</p>
-          <div class="opts"><label><input type="radio" name="q4" value="sim"> Sim</label><label><input type="radio" name="q4" value="nao"> Não</label></div>
-        </div>
-        <div class="q">
-          <p class="qtext">5. O roteador tem mais de 4-5 anos e você nunca atualizou o firmware dele?</p>
-          <div class="opts"><label><input type="radio" name="q5" value="sim"> Sim, ou não sei</label><label><input type="radio" name="q5" value="nao"> Não</label></div>
-        </div>
-        <div class="q">
-          <p class="qtext">6. A lentidão piora bastante à noite (18h-23h) comparado com de manhã?</p>
-          <div class="opts"><label><input type="radio" name="q6" value="sim"> Sim</label><label><input type="radio" name="q6" value="nao"> Não, é constante</label></div>
-        </div>
-        <div class="q">
-          <p class="qtext">7. Muita gente/muitos aparelhos usam a internet ao mesmo tempo na sua casa (streaming, jogos, downloads, câmeras)?</p>
-          <div class="opts"><label><input type="radio" name="q7" value="sim"> Sim</label><label><input type="radio" name="q7" value="nao"> Não, uso leve</label></div>
-        </div>
-
-        <button type="submit" class="diag-btn">Ver diagnóstico</button>
-      </form>
-
-      <div id="diagResult" class="diag-result" hidden></div>
+  <section class="pillars wrap" id="como-funciona">
+    <h2 class="visually-hidden">Como nossos guias funcionam</h2>
+    <div class="pillars-grid">
+      <div class="pillar"><span class="num">01</span><h3>Diagnóstico antes da solução</h3><p>Perguntas rápidas apontam a causa mais provável do seu problema antes de indicar o que fazer.</p></div>
+      <div class="pillar"><span class="num">02</span><h3>Como confirmar, depois resolver</h3><p>Cada causa vem com um teste pra confirmar que é realmente ela, e um passo a passo específico — não genérico.</p></div>
+      <div class="pillar"><span class="num">03</span><h3>Sem recomendação disfarçada</h3><p>Nada de indicar produto pra ganhar comissão disfarçado de dica. Só o que resolve.</p></div>
     </div>
   </section>
 
-  <section class="categoria">
-    <div class="cat-label">Categoria 1 de 3</div>
-    <h2 class="cat-title">Causas dentro de casa</h2>
-    <p class="cat-desc">O grupo mais comum — tem a ver com o roteador, onde ele está e como está configurado. Geralmente são as mais fáceis e baratas de resolver.</p>
-
-    <div class="cause-grid">
-      <div class="cause" id="causa-canal">
-        <div class="cause-head"><span class="impact alto">Impacto alto</span><h3>Vizinho no mesmo canal que você</h3></div>
-        <div class="diagram">
-          <svg viewBox="0 0 600 210" role="img" aria-label="Gráfico mostrando canais 1 e 6 lotados de redes vizinhas e canal 11 livre">
-            <text x="20" y="26" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-soft)">REDES VIZINHAS POR CANAL (2.4GHz)</text>
-            <g font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink)">
-              <rect x="60" y="140" width="60" height="40" fill="var(--weak)"/>
-              <rect x="60" y="90" width="60" height="50" fill="var(--weak)" opacity="0.7"/>
-              <rect x="60" y="50" width="60" height="40" fill="var(--weak)" opacity="0.45"/>
-              <text x="90" y="196" text-anchor="middle">Canal 1</text>
-              <text x="90" y="42" text-anchor="middle" font-size="12">7 redes</text>
-              <rect x="270" y="150" width="60" height="30" fill="var(--warn)"/>
-              <rect x="270" y="110" width="60" height="40" fill="var(--warn)" opacity="0.6"/>
-              <text x="300" y="196" text-anchor="middle">Canal 6</text>
-              <text x="300" y="102" text-anchor="middle" font-size="12">4 redes</text>
-              <rect x="480" y="172" width="60" height="8" fill="var(--good)"/>
-              <text x="510" y="196" text-anchor="middle">Canal 11</text>
-              <text x="510" y="164" text-anchor="middle" font-size="12" fill="var(--good)" font-weight="600">1 rede — livre</text>
-            </g>
-            <line x1="20" y1="180" x2="580" y2="180" stroke="var(--line)" stroke-width="1"/>
+  <section class="guides wrap" id="guias">
+    <div class="section-head">
+      <h2>Guias disponíveis</h2>
+      <p>Cada guia cobre um problema específico, de ponta a ponta — da causa mais provável até o passo a passo de resolução.</p>
+    </div>
+    <div class="guide-grid">
+      <a class="guide-card" href="wifi-lento.html">
+        <div class="guide-visual">
+          <svg viewBox="0 0 200 110" width="170" role="img" aria-hidden="true">
+            <rect x="20" y="55" width="28" height="35" rx="4" fill="var(--weak)" opacity="0.85"/>
+            <rect x="58" y="40" width="28" height="50" rx="4" fill="var(--warn)" opacity="0.85"/>
+            <rect x="96" y="25" width="28" height="65" rx="4" fill="var(--good)" opacity="0.6"/>
+            <rect x="134" y="10" width="28" height="80" rx="4" fill="var(--teal)" opacity="0.85"/>
           </svg>
         </div>
-        <p class="resumo"><strong>Resumindo:</strong> se seu roteador e o do vizinho gritam no mesmo canal, os dois ficam mais lentos.</p>
-        <p class="body">No Wi-Fi 2.4GHz só existem 3 canais que não se sobrepõem (1, 6 e 11). Em apartamento ou rua com casas próximas, é comum ter vários roteadores brigando pelo mesmo canal — e a maioria vem de fábrica no "automático", que nem sempre escolhe bem. <em>Isso afeta principalmente a rede 2.4GHz — a 5GHz tem muito mais canais disponíveis e sofre bem menos com esse problema.</em></p>
-        <p class="tag">Como confirmar</p>
-        <p class="confirm">Instale o app <strong>WiFi Analyzer</strong> (Android, grátis) ou, no Mac, segure Option e clique no ícone de Wi-Fi → "Open Wireless Diagnostics" → menu Window → Scan. No iPhone não dá direto — peça emprestado um Android ou use um notebook. O app mostra quantas redes existem em cada canal perto de você.</p>
-        <p class="tag">Passo a passo para resolver</p>
-        <ol class="steps">
-          <li>Rode o app/scan acima e anote qual dos canais 1, 6 ou 11 tem menos redes.</li>
-          <li>Acesse o painel do roteador (veja a caixa no início do guia).</li>
-          <li>Procure "Wireless" ou "Configurações sem fio" → "Canal" (Channel).</li>
-          <li>Troque de "Automático" para o número do canal mais livre que você identificou.</li>
-          <li>Salve — o roteador reinicia sozinho em 1-2 minutos.</li>
-          <li>Reconecte os aparelhos se necessário e reteste a velocidade.</li>
-        </ol>
-      </div>
-
-      <div class="cause" id="causa-posicao">
-        <div class="cause-head"><span class="impact alto">Impacto alto</span><h3>Parede de concreto não perdoa</h3></div>
-        <div class="diagram">
-          <svg viewBox="0 0 600 220" role="img" aria-label="Comparação de planta de casa com roteador mal posicionado, sinal fraco, versus bem posicionado, sinal forte em toda a casa">
-            <g font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-soft)">
-              <text x="20" y="20">RUIM — no canto, atrás de parede</text>
-              <text x="320" y="20">BOM — central e elevado</text>
-            </g>
-            <rect x="20" y="36" width="260" height="150" fill="none" stroke="var(--ink)" stroke-width="2"/>
-            <line x1="150" y1="36" x2="150" y2="186" stroke="var(--ink)" stroke-width="6"/>
-            <circle cx="45" cy="61" r="6" fill="var(--weak)"/>
-            <circle cx="45" cy="61" r="20" fill="none" stroke="var(--weak)" stroke-width="2" stroke-dasharray="3 4" opacity="0.7"/>
-            <circle cx="45" cy="61" r="34" fill="none" stroke="var(--weak)" stroke-width="2" stroke-dasharray="3 4" opacity="0.35"/>
-            <text x="230" y="172" font-family="IBM Plex Sans" font-size="12" fill="var(--weak)" text-anchor="middle">zona morta</text>
-            <rect x="320" y="36" width="260" height="150" fill="none" stroke="var(--ink)" stroke-width="2"/>
-            <line x1="450" y1="36" x2="450" y2="186" stroke="var(--ink)" stroke-width="6" opacity="0.15"/>
-            <circle cx="450" cy="111" r="6" fill="var(--good)"/>
-            <circle cx="450" cy="111" r="35" fill="none" stroke="var(--good)" stroke-width="2" opacity="0.7"/>
-            <circle cx="450" cy="111" r="65" fill="none" stroke="var(--good)" stroke-width="2" opacity="0.4"/>
-            <circle cx="450" cy="111" r="90" fill="none" stroke="var(--good)" stroke-width="2" opacity="0.2"/>
+        <div class="guide-body">
+          <div class="guide-cat">Wi-Fi doméstico</div>
+          <h3>Por que seu Wi-Fi está lento (e como resolver de verdade)</h3>
+          <p class="desc">Cobertura, canal, provedor e uso da rede — separados, com teste de confirmação pra cada causa.</p>
+          <span class="guide-link">Ler guia completo →</span>
+        </div>
+      </a>
+      <a class="guide-card" href="dispositivo-nao-conecta.html">
+        <div class="guide-visual">
+          <svg viewBox="0 0 200 110" width="170" role="img" aria-hidden="true">
+            <circle cx="60" cy="55" r="30" fill="none" stroke="var(--teal)" stroke-width="3" opacity="0.8"/>
+            <circle cx="60" cy="55" r="6" fill="var(--teal)"/>
+            <rect x="130" y="40" width="30" height="30" rx="6" fill="var(--weak)" opacity="0.85"/>
+            <line x1="90" y1="55" x2="128" y2="55" stroke="var(--line)" stroke-width="3" stroke-dasharray="4 5"/>
           </svg>
         </div>
-        <p class="resumo"><strong>Resumindo:</strong> roteador escondido num canto cria "zona morta"; centralizado e alto, cobre a casa quase toda.</p>
-        <p class="body">Parede de alvenaria/concreto derruba o sinal muito mais que divisória de drywall ou madeira. Roteador dentro de armário, atrás da TV, perto de espelho ou do micro-ondas perde alcance sem você perceber.</p>
-        <p class="tag">Como confirmar</p>
-        <p class="confirm">Faça um teste de velocidade (qualquer site de speedtest) parado do lado do roteador, depois no cômodo mais distante, depois em 1-2 cômodos intermediários. Se a queda entre eles for grande (mais de 50%), é posição, não é a internet contratada.</p>
-        <p class="tag">Passo a passo para resolver</p>
-        <ol class="steps">
-          <li>Desligue o roteador da tomada.</li>
-          <li>Escolha um ponto o mais central possível na casa, longe de parede de concreto entre ele e os cômodos que você mais usa.</li>
-          <li>Coloque numa prateleira ou móvel alto — nunca no chão ou dentro de armário fechado.</li>
-          <li>Afaste pelo menos 1 metro de micro-ondas, geladeira, espelho grande ou qualquer coisa metálica.</li>
-          <li>Religue e espere 2 minutos pra estabilizar.</li>
-          <li>Repita o teste de velocidade nos mesmos cômodos de antes e compare.</li>
-          <li>Se a casa é grande/comprida e ainda sobra cômodo com sinal fraco, aí sim considere um segundo ponto de acesso ou mesh (próxima causa).</li>
-        </ol>
-      </div>
-
-      <div class="cause" id="causa-frequencia">
-        <div class="cause-head"><span class="impact medio">Impacto médio</span><h3>Você provavelmente tem duas redes, não uma</h3></div>
-        <div class="diagram">
-          <svg viewBox="0 0 600 220" role="img" aria-label="Duas redes do mesmo roteador: 2.4GHz com alcance maior e velocidade menor, 5GHz com alcance menor e velocidade maior">
-            <text x="300" y="24" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-soft)">MESMO ROTEADOR, DUAS REDES</text>
-            <circle cx="300" cy="115" r="80" fill="var(--teal)" opacity="0.10"/>
-            <circle cx="300" cy="115" r="48" fill="var(--teal)" opacity="0.22"/>
-            <circle cx="300" cy="115" r="6" fill="var(--ink)"/>
-            <text x="300" y="120" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="var(--teal)" font-weight="600">5GHz</text>
-            <text x="300" y="135" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--ink-soft)">rápida, alcance menor</text>
-            <text x="300" y="205" text-anchor="middle" font-family="IBM Plex Sans" font-size="13" fill="var(--ink)" font-weight="600">2.4GHz — alcança mais longe, mais lenta</text>
-          </svg>
+        <div class="guide-body">
+          <div class="guide-cat">Casa inteligente</div>
+          <h3>Dispositivo smart Wi-Fi não conecta ou fica offline</h3>
+          <p class="desc">Do pareamento à nuvem do fabricante — descubra em qual das quatro etapas o problema está.</p>
+          <span class="guide-link">Ler guia completo →</span>
         </div>
-        <p class="resumo"><strong>Resumindo:</strong> se as duas redes têm o mesmo nome, seu celular pode ficar "preso" na mais lenta mesmo perto do roteador.</p>
-        <p class="body">A maioria dos roteadores transmite em 2.4GHz (alcance maior, mais lenta, mais concorrida) e 5GHz (mais rápida, mas perde força mais rápido em paredes) ao mesmo tempo.</p>
-        <p class="tag">Como confirmar</p>
-        <p class="confirm">No celular, abra as configurações de Wi-Fi perto do roteador. Se aparecer só um nome de rede na lista (e não dois, tipo "CasaWifi" e "CasaWifi_5G"), sua rede está unificada — é bem provável que esteja preso na 2.4GHz sem saber.</p>
-        <p class="tag">Passo a passo para resolver</p>
-        <ol class="steps">
-          <li>Acesse o painel do roteador → "Wireless" ou "Configurações sem fio".</li>
-          <li>Procure as seções separadas de 2.4GHz e 5GHz (às vezes em abas diferentes).</li>
-          <li>Dê nomes diferentes pra cada uma — ex.: "CasaWifi" (2.4GHz) e "CasaWifi_5G" (5GHz). <em>Nota: roteadores mais novos têm "band steering" (às vezes chamado Smart Connect) razoavelmente bom, que já escolhe a banda certa sozinho — separar os nomes só costuma valer a pena se você perceber, na prática, que os aparelhos ficam "presos" na banda errada.</em></li>
-          <li>Salve e reconecte os aparelhos: escolha manualmente a rede "_5G" em quem fica perto do roteador (TV, PC, videogame), e a normal em quem fica longe ou é de baixo consumo (lâmpada inteligente, campainha).</li>
-        </ol>
-      </div>
-
-      <div class="cause" id="causa-repetidor">
-        <div class="cause-head"><span class="impact medio">Impacto médio</span><h3>O clássico repetidor de tomada</h3></div>
-        <div class="diagram">
-          <svg viewBox="0 0 600 180" role="img" aria-label="Repetidor de tomada corta a velocidade pela metade; sistema mesh mantém velocidade em vários pontos">
-            <text x="20" y="24" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-soft)">REPETIDOR</text>
-            <circle cx="60" cy="90" r="10" fill="var(--good)"/>
-            <text x="60" y="115" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--ink-soft)">100%</text>
-            <line x1="72" y1="90" x2="150" y2="90" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="4 4"/>
-            <circle cx="165" cy="90" r="10" fill="var(--warn)"/>
-            <text x="165" y="115" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--warn)" font-weight="600">~50%</text>
-            <text x="330" y="24" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-soft)">MESH</text>
-            <circle cx="370" cy="90" r="10" fill="var(--good)"/>
-            <line x1="380" y1="90" x2="450" y2="60" stroke="var(--good)" stroke-width="2"/>
-            <circle cx="460" cy="55" r="10" fill="var(--good)"/>
-            <line x1="380" y1="95" x2="450" y2="120" stroke="var(--good)" stroke-width="2"/>
-            <circle cx="460" cy="125" r="10" fill="var(--good)"/>
-            <text x="370" y="115" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--good)">100%</text>
-            <text x="460" y="45" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--good)">100%</text>
-            <text x="460" y="150" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--good)">100%</text>
-          </svg>
-        </div>
-        <p class="resumo"><strong>Resumindo:</strong> repetidor "repassa" o sinal mas costuma cortar a velocidade pela metade; mesh usa vários pontos sem esse corte.</p>
-        <p class="body">Repetidores de tomada recebem e retransmitem na mesma frequência, o que costuma cortar a velocidade disponível pela metade para quem usa o repetidor.</p>
-        <p class="tag">Como confirmar</p>
-        <p class="confirm">Rode um teste de velocidade conectado direto no roteador principal, depois conecte na rede do repetidor (geralmente tem um nome parecido, tipo "CasaWifi_EXT") e teste de novo no mesmo lugar. Se a diferença for grande, o repetidor é o gargalo.</p>
-        <p class="tag">Passo a passo para resolver</p>
-        <ol class="steps">
-          <li><strong>Solução rápida e gratuita:</strong> reposicione o repetidor na metade do caminho entre o roteador e o cômodo com problema — não no cômodo problemático em si. Ele precisa de sinal forte do roteador pra retransmitir bem.</li>
-          <li>No app ou painel do repetidor, confirme que ele está usando o canal certo (mesmo raciocínio da causa de canal, acima).</li>
-          <li>Se mesmo assim a velocidade continuar caindo muito, considere trocar por um sistema mesh (2-3 pontos vendidos como kit, ex. marcas com "mesh" no nome) — ou, se a casa tem rede elétrica em boas condições, um adaptador Powerline (leva o sinal pela fiação elétrica) ou um ponto de acesso cabeado costumam entregar mais velocidade que qualquer repetidor sem fio.</li>
-          <li>Ao instalar mesh: os pontos entram na mesma rede/app, com um nome de rede único — não crie uma rede separada pra cada ponto, isso anula a vantagem do mesh.</li>
-        </ol>
-      </div>
-
-      <div class="cause" id="causa-firmware">
-        <div class="cause-head"><span class="impact variavel">Impacto variável</span><h3>Firmware velho, hardware fraco</h3></div>
-        <div class="diagram">
-          <svg viewBox="0 0 600 120" role="img" aria-label="Linha do tempo mostrando roteador sem atualização de firmware há vários anos">
-            <line x1="40" y1="60" x2="560" y2="60" stroke="var(--line)" stroke-width="3"/>
-            <circle cx="80" cy="60" r="7" fill="var(--good)"/>
-            <text x="80" y="35" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--ink-soft)">Instalado</text>
-            <circle cx="520" cy="60" r="7" fill="var(--weak)"/>
-            <text x="520" y="35" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--weak)" font-weight="600">Hoje, sem update</text>
-            <text x="300" y="95" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-soft)">4-5 anos sem atualização de firmware</text>
-          </svg>
-        </div>
-        <p class="resumo"><strong>Resumindo:</strong> roteador de brinde, sem atualização há anos, é frequentemente o gargalo.</p>
-        <p class="body">Roteadores "de brinde" costumam ser o modelo mais básico da operadora, sem atualização de firmware há anos. Firmware desatualizado não é só sobre recurso novo — as atualizações costumam trazer correção de bugs, brechas de segurança e ajustes de estabilidade que afetam diretamente a velocidade e as quedas de conexão.</p>
-        <p class="tag">Como confirmar</p>
-        <p class="confirm">No painel do roteador, procure "Status" ou "Sobre" — normalmente mostra o modelo e a versão do firmware instalado, e às vezes a data. Se você não lembra de nunca ter atualizado, provavelmente nunca atualizou.</p>
-        <p class="tag">Passo a passo para resolver</p>
-        <ol class="steps">
-          <li>No painel, procure "Sistema", "Administração" ou "Atualização de firmware".</li>
-          <li>Clique em "Verificar atualização" — muitos roteadores fazem isso automaticamente, alguns pedem pra baixar um arquivo do site do fabricante e enviar manualmente.</li>
-          <li>Se atualizar, não desligue o roteador da tomada durante o processo (pode danificar o aparelho).</li>
-          <li>Se não há atualização disponível e o aparelho tem mais de 4-5 anos com plano de internet bem mais rápido do que ele entrega, o conserto real é trocar de roteador — configuração não resolve hardware ultrapassado.</li>
-        </ol>
-      </div>
+      </a>
     </div>
   </section>
 
-  <section class="categoria">
-    <div class="cat-label">Categoria 2 de 3</div>
-    <h2 class="cat-title">Causas do lado de fora</h2>
-    <p class="cat-desc">Mesmo com a rede de casa impecável, o problema pode estar entre o poste e seu roteador. Menos comuns que as causas internas, mas valem descartar.</p>
-
-    <div class="cause-grid">
-      <div class="cause" id="causa-pico">
-        <div class="cause-head"><span class="impact medio">Impacto médio</span><h3>Congestionamento no horário de pico</h3></div>
-        <div class="diagram">
-          <svg viewBox="0 0 600 180" role="img" aria-label="Gráfico de velocidade ao longo do dia, com queda entre 18h e 23h">
-            <line x1="40" y1="150" x2="560" y2="150" stroke="var(--line)" stroke-width="1"/>
-            <polyline points="40,90 150,85 260,80 330,120 400,145 470,140 520,110 560,95" fill="none" stroke="var(--teal)" stroke-width="3"/>
-            <rect x="330" y="40" width="140" height="110" fill="var(--warn)" opacity="0.10"/>
-            <text x="400" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--warn)" font-weight="600">18h – 23h</text>
-            <text x="40" y="168" font-family="IBM Plex Sans" font-size="11" fill="var(--ink-soft)">6h</text>
-            <text x="540" y="168" font-family="IBM Plex Sans" font-size="11" fill="var(--ink-soft)">23h</text>
-            <text x="20" y="94" font-family="IBM Plex Sans" font-size="11" fill="var(--ink-soft)">rápido</text>
-            <text x="20" y="148" font-family="IBM Plex Sans" font-size="11" fill="var(--ink-soft)">lento</text>
-          </svg>
-        </div>
-        <p class="resumo"><strong>Resumindo:</strong> se a lentidão é só à noite, o problema pode ser da rede do provedor na sua região, não da sua casa.</p>
-        <p class="body">Provedores dividem a capacidade da rede local entre os vizinhos de uma região. Em horário de pico (fim de tarde/noite, quando todo mundo chega em casa e liga streaming), a velocidade real pode cair mesmo que o plano contratado seja mais alto.</p>
-        <p class="tag">Como confirmar</p>
-        <p class="confirm">Já é o próprio teste — veja o passo a passo abaixo.</p>
-        <p class="tag">Passo a passo para resolver</p>
-        <ol class="steps">
-          <li>Rode um teste de velocidade (speedtest.net ou fast.com) com cabo direto no roteador, sem Wi-Fi no meio.</li>
-          <li>Repita no mesmo dia às 8h, 13h, 20h e 22h.</li>
-          <li>Faça isso por 3-4 dias e anote os números (print de tela ajuda).</li>
-          <li>Se a queda no horário de pico for consistente e grande (bem abaixo do contratado), ligue para o provedor com os prints em mãos — dados concretos aceleram o atendimento.</li>
-          <li>Se o provedor não resolver e o padrão persistir por semanas, isso é argumento válido pra avaliar outro provedor na região, se houver opção.</li>
-        </ol>
-      </div>
-
-      <div class="cause" id="causa-duplo-nat">
-        <div class="cause-head"><span class="impact variavel">Impacto variável</span><h3>Modem + roteador próprio brigando (duplo NAT)</h3></div>
-        <div class="diagram">
-          <svg viewBox="0 0 600 190" role="img" aria-label="Comparação entre configuração com duplo NAT, gerando instabilidade, e configuração ideal com modem em modo bridge">
-            <text x="20" y="24" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--warn)" font-weight="600">COM DUPLO NAT</text>
-            <rect x="20" y="40" width="90" height="34" rx="6" fill="none" stroke="var(--ink-soft)" stroke-width="2"/>
-            <text x="65" y="61" text-anchor="middle" font-family="IBM Plex Sans" font-size="11">Modem</text>
-            <rect x="150" y="40" width="90" height="34" rx="6" fill="none" stroke="var(--warn)" stroke-width="2"/>
-            <text x="195" y="61" text-anchor="middle" font-family="IBM Plex Sans" font-size="11">Roteador</text>
-            <line x1="112" y1="57" x2="148" y2="57" stroke="var(--warn)" stroke-width="2"/>
-            <line x1="242" y1="57" x2="278" y2="57" stroke="var(--warn)" stroke-width="2" stroke-dasharray="3 3"/>
-            <text x="330" y="61" font-family="IBM Plex Sans" font-size="11" fill="var(--warn)">2 traduções de rede — instável</text>
-
-            <text x="20" y="130" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--good)" font-weight="600">IDEAL (modem em bridge)</text>
-            <rect x="20" y="145" width="90" height="34" rx="6" fill="none" stroke="var(--ink-soft)" stroke-width="2"/>
-            <text x="65" y="166" text-anchor="middle" font-family="IBM Plex Sans" font-size="11">Modem</text>
-            <rect x="150" y="145" width="90" height="34" rx="6" fill="none" stroke="var(--good)" stroke-width="2"/>
-            <text x="195" y="166" text-anchor="middle" font-family="IBM Plex Sans" font-size="11">Roteador</text>
-            <line x1="112" y1="162" x2="148" y2="162" stroke="var(--good)" stroke-width="2"/>
-            <line x1="242" y1="162" x2="278" y2="162" stroke="var(--good)" stroke-width="2"/>
-            <text x="330" y="166" font-family="IBM Plex Sans" font-size="11" fill="var(--good)">1 tradução de rede — estável</text>
-          </svg>
-        </div>
-        <p class="resumo"><strong>Resumindo:</strong> se você usa o roteador da operadora <em>e</em> um roteador próprio juntos, os dois podem estar se atrapalhando.</p>
-        <p class="body"><em>Essa causa só se aplica a quem tem um roteador próprio além do equipamento da operadora — se você usa só o modem/roteador que a operadora instalou, pode pular pra próxima.</em> Quando o modem da operadora já faz roteamento (NAT) e você liga um roteador seu atrás dele, a rede passa por duas "traduções" de endereço — isso pode causar instabilidade, quedas e problemas em jogos online, mesmo com boa velocidade contratada.</p>
-        <p class="tag">Como confirmar</p>
-        <p class="confirm">Isso só se aplica se você tem <strong>dois</strong> aparelhos: o modem/roteador que a operadora instalou <em>e</em> um roteador seu, próprio, ligado nele. No painel do seu roteador, procure "Status" → "WAN" ou "Internet". Se o "IP recebido" começar com 192.168.x.x ou 10.x.x.x, é sinal de duplo NAT (o ideal seria um IP diferente, de faixa pública ou da operadora).</p>
-        <p class="tag">Passo a passo para resolver</p>
-        <ol class="steps">
-          <li>Ligue para a operadora e peça para colocar o modem dela em <strong>"modo bridge"</strong> (às vezes chamado de "modo transparente"). Isso faz o modem só repassar o sinal, sem rotear.</li>
-          <li>Nem toda operadora libera fácil — algumas pedem que você use o roteador delas mesmo, sem o seu. Se for o caso, considere desativar o Wi-Fi do modem da operadora e usar só o seu roteador conectado a ele por cabo.</li>
-          <li>Depois de configurado, refaça o teste do IP no painel do seu roteador pra confirmar que a duplicação sumiu.</li>
-        </ol>
-      </div>
+  <section class="soon wrap">
+    <div class="soon-box">
+      <p class="tag">Em produção</p>
+      <p>Os próximos guias devem cobrir automação residencial e uso prático de IA no dia a dia — sempre no mesmo formato: diagnóstico, confirmação e passo a passo real.</p>
+      <div class="soon-tags"><span>Automação residencial</span><span>IA aplicada</span></div>
     </div>
   </section>
-
-  <section class="categoria">
-    <div class="cat-label">Categoria 3 de 3</div>
-    <h2 class="cat-title">Causas de uso da rede</h2>
-    <p class="cat-desc">Às vezes a rede está saudável, mas está sendo dividida entre mais coisas (ou mais gente) do que você imagina.</p>
-
-    <div class="cause-grid">
-      <div class="cause" id="causa-dispositivos">
-        <div class="cause-head"><span class="impact alto">Impacto alto</span><h3>Excesso de dispositivos consumindo banda</h3></div>
-        <div class="diagram">
-          <svg viewBox="0 0 600 150" role="img" aria-label="Barra representando a internet contratada dividida entre streaming, downloads/atualizações, dispositivos inteligentes e o que sobra para o uso principal">
-            <text x="20" y="24" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-soft)">SUA INTERNET CONTRATADA, DIVIDIDA</text>
-            <rect x="20" y="40" width="220" height="46" fill="var(--weak)" opacity="0.75"/>
-            <text x="130" y="68" text-anchor="middle" font-family="IBM Plex Sans" font-size="12" fill="#fff">Streaming / jogos</text>
-            <rect x="240" y="40" width="150" height="46" fill="var(--warn)" opacity="0.75"/>
-            <text x="315" y="68" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="#fff">Downloads / updates</text>
-            <rect x="390" y="40" width="90" height="46" fill="var(--teal)" opacity="0.6"/>
-            <text x="435" y="68" text-anchor="middle" font-family="IBM Plex Sans" font-size="10" fill="#fff">Câmeras / IoT</text>
-            <rect x="480" y="40" width="100" height="46" fill="var(--good)"/>
-            <text x="530" y="68" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="#fff">Sobra p/ você</text>
-            <text x="20" y="112" font-family="IBM Plex Sans" font-size="12" fill="var(--ink-soft)">Quanto mais coisa rodando ao mesmo tempo, menor a fatia que sobra pro que você está tentando fazer.</text>
-          </svg>
-        </div>
-        <p class="resumo"><strong>Resumindo:</strong> streaming em 4K, download em segundo plano e câmeras de segurança competem pela mesma banda que você está tentando usar.</p>
-        <p class="body">TV rodando em 4K, celular baixando atualização, backup automático na nuvem, câmera de segurança transmitindo — tudo isso consome banda mesmo em segundo plano, sem ninguém "usando" ativamente.</p>
-        <p class="tag">Como confirmar</p>
-        <p class="confirm">No painel do roteador, procure "Dispositivos conectados" ou "Clientes" e veja quantos aparelhos aparecem — costuma surpreender. Como teste rápido: pause streaming, downloads e backups por 5 minutos e reteste a velocidade; se melhorar bastante, era isso.</p>
-        <p class="tag">Passo a passo para resolver</p>
-        <ol class="steps">
-          <li>No painel, veja se existe a opção "QoS" (Quality of Service) ou "Priorização de tráfego".</li>
-          <li>Se existir, priorize o dispositivo/atividade mais importante no momento (ex.: videochamada de trabalho acima de download de jogo).</li>
-          <li>Desative atualizações automáticas em horários de uso pesado (nas configurações do celular/PC/console, procure "atualizações automáticas" e programe pra madrugada).</li>
-          <li>Se a casa tem muita câmera/dispositivo IoT, considere colocá-los numa rede de convidados separada, pra não competirem com o tráfego principal.</li>
-          <li>Se mesmo com tudo isso o uso simultâneo real (várias pessoas streamando/jogando ao mesmo tempo) ainda for maior que a banda contratada, o ajuste aqui é comercial: avaliar upgrade de plano.</li>
-        </ol>
-      </div>
-
-      <div class="cause" id="causa-seguranca">
-        <div class="cause-head"><span class="impact variavel">Impacto variável</span><h3>Gente de fora usando sua rede</h3></div>
-        <div class="diagram">
-          <svg viewBox="0 0 600 150" role="img" aria-label="Lista de dispositivos conectados com um dispositivo desconhecido destacado">
-            <text x="20" y="24" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-soft)">DISPOSITIVOS CONECTADOS AGORA</text>
-            <g font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--ink)">
-              <circle cx="35" cy="55" r="6" fill="var(--good)"/><text x="52" y="59">Celular do Fernando</text>
-              <circle cx="35" cy="80" r="6" fill="var(--good)"/><text x="52" y="84">Smart TV — sala</text>
-              <circle cx="35" cy="105" r="6" fill="var(--good)"/><text x="52" y="109">Notebook</text>
-              <circle cx="300" cy="55" r="6" fill="var(--good)"/><text x="317" y="59">Câmera — quintal</text>
-              <circle cx="300" cy="80" r="6" fill="var(--weak)"/><text x="317" y="84" fill="var(--weak)" font-weight="600">Dispositivo desconhecido?</text>
-            </g>
-            <rect x="285" y="68" width="270" height="24" rx="12" fill="none" stroke="var(--weak)" stroke-width="1.5" stroke-dasharray="3 3"/>
-          </svg>
-        </div>
-        <p class="resumo"><strong>Resumindo:</strong> senha fraca ou compartilhada demais pode significar gente de fora dividindo sua internet sem você saber.</p>
-        <p class="body">Senha simples, compartilhada com muita gente ao longo do tempo, ou rede sem criptografia WPA3/WPA2 adequada, facilita que vizinhos ou visitantes antigos continuem conectados sem você perceber.</p>
-        <p class="tag">Como confirmar</p>
-        <p class="confirm">No painel do roteador, procure "Dispositivos conectados" ou "Clientes". A maioria mostra um nome de cada aparelho (ex. "iPhone-de-Fernando") — se aparecer algo genérico tipo "device-a3f2" ou um nome que você não reconhece, vale investigar.</p>
-        <p class="tag">Passo a passo para resolver</p>
-        <ol class="steps">
-          <li><strong>Ação mais rápida, se estiver com pressa:</strong> troque a senha do Wi-Fi agora — isso já desconecta qualquer intruso na hora, mesmo antes de investigar quem era.</li>
-          <li>Liste os dispositivos que são realmente seus (conte quantos aparelhos moram na casa: celulares, TVs, notebooks, câmeras, assistentes).</li>
-          <li>Compare com a lista de conectados no painel — qualquer coisa sobrando é suspeita.</li>
-          <li>No painel, procure "Segurança" ou "Wireless Security" e confirme que está em <strong>WPA2</strong> ou <strong>WPA3</strong> (nunca WEP ou rede aberta).</li>
-          <li>Troque a senha por uma nova, com pelo menos 12 caracteres, misturando letras e números.</li>
-          <li>Salve — todos os aparelhos vão desconectar e você reconecta um por um, digitando a senha nova. Isso automaticamente remove quem não deveria estar lá.</li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <div>
-    <div class="callout">
-      Uma nota sobre "limitação da operadora": é uma queixa recorrente em fóruns, mas antes de suspeitar disso, descarte as causas acima — na prática, a grande maioria dos casos de "Wi-Fi lento" tem origem dentro de casa ou no uso da rede, não no provedor.
-    </div>
-
-    <h2 style="font-family:'Space Grotesk',sans-serif;">Checklist rápido antes de trocar de operadora</h2>
-    <ul class="checklist">
-      <li><span class="n">01</span> Testou a velocidade com cabo de rede direto no roteador (sem Wi-Fi) para confirmar se o problema é da internet ou da rede sem fio?</li>
-      <li><span class="n">02</span> Checou se o canal 2.4GHz está congestionado com os vizinhos?</li>
-      <li><span class="n">03</span> Roteador está numa posição central e elevada, longe de metal e micro-ondas?</li>
-      <li><span class="n">04</span> Testou a velocidade em horários diferentes do dia (manhã vs. noite)?</li>
-      <li><span class="n">05</span> Conferiu a lista de dispositivos conectados no painel do roteador?</li>
-      <li><span class="n">06</span> Verificou se há atualização de firmware disponível?</li>
-    </ul>
-  </div>
-
-  <div class="wrap" style="padding-left:0;padding-right:0;">
-    <h2 style="font-family:'Space Grotesk',sans-serif;margin-top:46px;">Perguntas frequentes</h2>
-    <div class="faq">
-      <details>
-        <summary>Como saber se o problema é no Wi-Fi ou na operadora?</summary>
-        <p>Conecte um notebook com cabo de rede direto no roteador (sem Wi-Fi) e rode um teste de velocidade. Se a velocidade no cabo já vem baixa, é a internet contratada/provedor. Se no cabo vem rápido e só o Wi-Fi é lento, o problema é da rede sem fio de casa.</p>
-      </details>
-      <details>
-        <summary>Qual canal escolher no Wi-Fi 2.4GHz?</summary>
-        <p>Só 1, 6 e 11 não se sobrepõem. Use um app analisador de Wi-Fi pra ver qual dos três tem menos redes vizinhas na sua região e fixe esse manualmente — evite deixar no automático.</p>
-      </details>
-      <details>
-        <summary>Mesh vale a pena?</summary>
-        <p>Pra casas grandes ou de mais de um andar com "zona morta" mesmo depois de reposicionar o roteador, sim — o handoff entre pontos é mais suave que um repetidor avulso. Pra apartamento pequeno, geralmente não compensa o custo extra.</p>
-      </details>
-      <details>
-        <summary>Repetidor de tomada funciona?</summary>
-        <p>Funciona pra levar o sinal até um cômodo, mas costuma cortar a velocidade disponível pela metade pra quem conecta nele. Se velocidade importa mais que só "ter sinal", mesh ou um ponto de acesso cabeado costumam entregar mais.</p>
-      </details>
-      <details>
-        <summary>Preciso trocar de roteador?</summary>
-        <p>Só depois de descartar as causas de configuração e posição. Se o aparelho tem mais de 4-5 anos, nunca recebeu atualização de firmware e o plano contratado é bem mais rápido do que ele entrega, aí sim trocar costuma valer mais a pena que ajustar configuração.</p>
-      </details>
-    </div>
-  </div>
 
   <footer class="site" id="sobre">
-    <div class="brand"><span class="bars"><i></i><i></i><i></i><i></i></span> Base Tech</div>
-    <p>Guias práticos sobre rede doméstica, automação e tecnologia aplicada ao dia a dia — escritos e revisados por quem realmente mexe nisso.</p>
+    <div class="wrap">
+      <div class="brand"><span class="bars"><i></i><i></i><i></i><i></i></span> Base Tech</div>
+      <p>Guias práticos sobre rede doméstica, automação e tecnologia aplicada ao dia a dia — escritos e com revisão técnica e editorial antes de publicar; nenhum conteúdo é patrocinado.</p>
+    </div>
   </footer>
 </main>
 
 <script>
   requestAnimationFrame(()=> requestAnimationFrame(()=>{
-    document.getElementById('meter').classList.add('live');
+    document.getElementById('heroVisual').classList.add('live');
   }));
-
-  document.getElementById('diagForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const val = (name) => {
-      const el = document.querySelector(`input[name="${name}"]:checked`);
-      return el ? el.value : null;
-    };
-    const q1=val('q1'), q2=val('q2'), q3=val('q3'), q4=val('q4'), q5=val('q5'), q6=val('q6'), q7=val('q7');
-    if(!q1||!q2||!q3||!q4||!q5||!q6||!q7){
-      alert('Responde as 7 perguntas pra eu conseguir apontar a causa mais provável.');
-      return;
-    }
-
-    const causas = [];
-    if(q1 === 'sim') causas.push({peso:3, nome:'Congestionamento de canal', id:'causa-canal'});
-    if(q2 === 'sim') causas.push({peso:3, nome:'Posição do roteador', id:'causa-posicao'});
-    if(q3 === 'sim') causas.push({peso:2, nome:'Rede 2.4GHz vs 5GHz unificada', id:'causa-frequencia'});
-    if(q4 === 'sim') causas.push({peso:2, nome:'Repetidor cortando velocidade', id:'causa-repetidor'});
-    if(q5 === 'sim') causas.push({peso:1, nome:'Roteador desatualizado', id:'causa-firmware'});
-    if(q6 === 'sim') causas.push({peso:2, nome:'Congestionamento no horário de pico', id:'causa-pico'});
-    if(q7 === 'sim') causas.push({peso:2, nome:'Excesso de dispositivos consumindo banda', id:'causa-dispositivos'});
-
-    causas.sort((a,b)=> b.peso - a.peso);
-
-    const resultEl = document.getElementById('diagResult');
-    resultEl.hidden = false;
-
-    if(causas.length === 0){
-      resultEl.innerHTML = `<div class="diag-empty">Pelas suas respostas, nenhuma das causas mais comuns parece bater com seu caso. Vale checar se o problema não está do lado do provedor mesmo — teste a velocidade com cabo direto no roteador antes de qualquer coisa.</div>`;
-    } else {
-      const fortes = causas.filter(c => c.peso >= 3);
-      const possiveis = causas.filter(c => c.peso < 3);
-      let html = `<h3>Onde investigar primeiro</h3><p style="font-size:0.88rem;color:var(--ink-soft);margin:-6px 0 14px;">Isto é um direcionamento baseado nas suas respostas, não uma confirmação — use o "como confirmar" de cada causa antes de agir.</p>`;
-      if(fortes.length){
-        html += `<p class="tag" style="margin:0 0 6px;">Mais prováveis</p>`;
-        fortes.forEach((c) => { html += `<div class="diag-item"><span>${c.nome}</span><a href="#${c.id}">ver solução →</a></div>`; });
-      }
-      if(possiveis.length){
-        html += `<p class="tag" style="margin:14px 0 6px;">Também vale checar</p>`;
-        possiveis.forEach((c) => { html += `<div class="diag-item"><span>${c.nome}</span><a href="#${c.id}">ver solução →</a></div>`; });
-      }
-      resultEl.innerHTML = html;
-    }
-    resultEl.scrollIntoView({behavior:'smooth', block:'start'});
-  });
 </script>
 
 </body>
